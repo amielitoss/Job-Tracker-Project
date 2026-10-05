@@ -13,16 +13,21 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
+      <Sidebar />
+      <div className="main-content">
         <Header />
-        <Sidebar />
-     <div className="stats-section">
-        {stats.map((stat) => {
-        return (
-            <StatCard key={stat.label} label={stat.label} value={stat.value}/>
-        );
-      })}
-     </div>
-
+        <div className="stats-section">
+          {stats.map((stat) => {
+            return (
+              <StatCard
+                key={stat.label}
+                label={stat.label}
+                value={stat.value}
+              />
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
