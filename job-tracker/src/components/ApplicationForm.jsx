@@ -9,11 +9,26 @@ function ApplicationForm({ onAddApplication }) {
     location: "",
     notes: "",
   });
+
   return (
-    <form action="" onSubmit={(event) => {
+    <form
+      onSubmit={(event) => {
         event.preventDefault();
-        onAddApplication(formData);
-    }}>
+        const newApplication = {
+          id: crypto.randomUUID(),
+          ...formData,
+        };
+        onAddApplication(newApplication);
+        setFormData({
+          company: "",
+          role: "",
+          status: "Applied",
+          date: "",
+          location: "",
+          notes: "",
+        });
+      }}
+    >
       {/* Company */}
       <label htmlFor="company">Company</label>
       <input
