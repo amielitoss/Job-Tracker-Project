@@ -1,4 +1,4 @@
-const applications = [
+const initialApplications = [
   {
     id: 1,
     company: "Example Company 1",
@@ -28,4 +28,4 @@ const applications = [
   },
 ];
 
-export default applications;
+export default initialApplications;

@@ -2,9 +2,13 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import StatCard from "../components/StatCard";
 import ApplicationCard from "../components/ApplicationCard";
-import applications from "../data/applications";
+import ApplicationForm from "../components/ApplicationForm";
+import { useState } from "react";
+import initialApplications from "../data/applications";
 
 function Dashboard() {
+  const [applications, setApplications] = useState(initialApplications);
+
   const stats = [
     {
       label: "Total Applications",
@@ -36,10 +40,12 @@ function Dashboard() {
     },
   ];
 
-  {
-    applications.map((application) => {
-      return <ApplicationCard key={application.id} application={application} />;
-    });
+  function addApplication(newApplication) {
+    setApplications([
+      ...applications,
+      newApplication
+    ]);
+
   }
 
   return (
@@ -59,6 +65,7 @@ function Dashboard() {
           })}
         </div>
         <div className="applications-section">
+          <ApplicationForm onAddApplication={addApplication}/>
           {applications.map((application) => {
             return (
               <ApplicationCard key={application.id} application={application} />
