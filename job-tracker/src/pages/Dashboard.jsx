@@ -100,6 +100,7 @@ function Dashboard() {
                 application={application}
                 onDeleteApplication={deleteApplication}
                 onEditApplication={setEditApplication}
+                onUpdateApplication={updateApplication}
               />
             );
           })}

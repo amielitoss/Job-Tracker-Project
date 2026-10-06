@@ -6,6 +6,7 @@ function ApplicationForm({
   onCancelEdit,
   onUpdateApplication,
 }) {
+    
   const emptyForm = {
     company: "",
     role: "",

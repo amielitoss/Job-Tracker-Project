@@ -1,19 +1,50 @@
-function ApplicationCard({ application, onDeleteApplication, onEditApplication }) {
-    return (
-        <div className="application-card">
-            <h3>{application.company}</h3>
-            <p>{application.role}</p>
-            <span>{application.status}</span>
-            <p>{application.date}</p>
-            <p>{application.location}</p>
-            <button type="button" onClick={() => {
-                onDeleteApplication(application.id)
-            }}>Delete Application</button>
-            <button type="button" onClick={() => {
-                onEditApplication(application)
-            }}>Edit Application</button>
-        </div>
-    )
+function ApplicationCard({
+  application,
+  onDeleteApplication,
+  onEditApplication,
+  onUpdateApplication,
+}) {
+    
+  return (
+    <div className="application-card">
+      <h3>{application.company}</h3>
+      <p>{application.role}</p>
+      <select
+        name=""
+        id=""
+        value={application.status}
+        onChange={(event) => {
+          onUpdateApplication({
+            ...application,
+            status: event.target.value,
+          });
+        }}
+      >
+        <option value="Applied">Applied</option>
+        <option value="Interview">Interview</option>
+        <option value="Offer">Offer</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+      <p>{application.date}</p>
+      <p>{application.location}</p>
+      <button
+        type="button"
+        onClick={() => {
+          onDeleteApplication(application.id);
+        }}
+      >
+        Delete Application
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          onEditApplication(application);
+        }}
+      >
+        Edit Application
+      </button>
+    </div>
+  );
 }
 
 export default ApplicationCard;
