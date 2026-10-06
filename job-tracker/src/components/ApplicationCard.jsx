@@ -26,6 +26,8 @@ function ApplicationCard({
       </select>
       <p>{application.date}</p>
       <p>{application.location}</p>
+
+      <div className="application-card-actions">
       <button
         type="button"
         onClick={() => {
@@ -42,6 +44,7 @@ function ApplicationCard({
       >
         Edit Application
       </button>
+    </div>
     </div>
   );
 }

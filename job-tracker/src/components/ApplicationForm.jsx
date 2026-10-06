@@ -6,7 +6,6 @@ function ApplicationForm({
   onCancelEdit,
   onUpdateApplication,
 }) {
-    
   const emptyForm = {
     company: "",
     role: "",
@@ -20,6 +19,7 @@ function ApplicationForm({
 
   return (
     <form
+      className="application-form"
       onSubmit={(event) => {
         event.preventDefault();
 

@@ -99,6 +99,7 @@ function Dashboard() {
           })}
         </div>
         <div className="applications-section">
+          <div className="application-filters">
           <input
             type="text"
             placeholder="Search applications..."
@@ -117,6 +118,7 @@ function Dashboard() {
             <option value="Offer">Offer</option>
             <option value="Rejected">Rejected</option>
           </select>
+          </div>
           <ApplicationForm
             key={editApplication?.id ?? "new"}
             onAddApplication={addApplication}

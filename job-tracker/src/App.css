@@ -94,6 +94,152 @@
   color: var(--text);
 }
 
+.application-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+}
+
+.application-filters input,
+.application-filters select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.application-filters input {
+  flex: 1;
+  min-width: 220px;
+  max-width: 500px;
+}
+
+.application-filters select {
+  min-width: 140px;
+}
+
+.application-filters input:focus,
+.application-filters select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.application-filters label {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.application-form {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+}
+
+.application-form input,
+.application-form select,
+.application-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.application-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.application-form input:focus,
+.application-form select:focus,
+.application-form textarea:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.application-form button {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.application-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  max-width: 900px;
+  margin: 0 auto 1rem;
+}
+
+.application-card h3 {
+  margin: 0;
+  color: var(--text);
+}
+
+.application-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.application-card select {
+  width: fit-content;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.application-card button {
+  padding: 0.65rem 0.9rem;
+  border: none;
+  border-radius: 0.7rem;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.application-card button:first-of-type {
+  background: var(--primary);
+  color: white;
+}
+
+.application-card button:last-of-type {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.applications-section {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.application-card-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
 
 /* responsive styles for smaller screens */
 @media (max-width: 1100px) {
@@ -120,5 +266,9 @@
   .header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .applications-section {
+    padding: 0 1rem 1rem;
   }
 }
