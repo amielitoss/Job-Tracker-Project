@@ -45,7 +45,14 @@ function Dashboard() {
       ...applications,
       newApplication
     ]);
+  }
 
+  function deleteApplication(id){
+    setApplications(
+      applications.filter((application) => {
+        return application.id !== id
+      })
+    )
   }
 
   return (
@@ -65,10 +72,10 @@ function Dashboard() {
           })}
         </div>
         <div className="applications-section">
-          <ApplicationForm onAddApplication={addApplication}/>
+          <ApplicationForm onAddApplication={addApplication} />
           {applications.map((application) => {
             return (
-              <ApplicationCard key={application.id} application={application} />
+              <ApplicationCard key={application.id} application={application} onDeleteApplication={deleteApplication}/>
             );
           })}
         </div>

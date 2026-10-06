@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ApplicationForm({ onAddApplication }) {
+function ApplicationForm({ onAddApplication}) {
   const [formData, setFormData] = useState({
     company: "",
     role: "",
@@ -123,6 +123,7 @@ function ApplicationForm({ onAddApplication }) {
       ></textarea>
 
       <button type="submit">Add Application</button>
+
     </form>
   );
 }
