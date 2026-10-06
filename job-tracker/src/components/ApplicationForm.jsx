@@ -1,14 +1,18 @@
 import { useState } from "react";
 
-function ApplicationForm({ onAddApplication}) {
-  const [formData, setFormData] = useState({
+function ApplicationForm({ onAddApplication, editApplication}) {
+    const emptyForm = {
     company: "",
     role: "",
     status: "Applied",
     date: "",
     location: "",
     notes: "",
-  });
+  }
+  
+    const [formData, setFormData] = useState(
+    editApplication ?? emptyForm
+  );
 
   return (
     <form

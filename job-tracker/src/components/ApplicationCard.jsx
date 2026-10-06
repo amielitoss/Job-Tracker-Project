@@ -1,4 +1,4 @@
-function ApplicationCard({ application, onDeleteApplication }) {
+function ApplicationCard({ application, onDeleteApplication, onEditApplication }) {
     return (
         <div className="application-card">
             <h3>{application.company}</h3>
@@ -9,6 +9,9 @@ function ApplicationCard({ application, onDeleteApplication }) {
             <button type="button" onClick={() => {
                 onDeleteApplication(application.id)
             }}>Delete Application</button>
+            <button type="button" onClick={() => {
+                onEditApplication(application)
+            }}>Edit Application</button>
         </div>
     )
 }

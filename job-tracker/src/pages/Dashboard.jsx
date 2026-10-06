@@ -8,6 +8,7 @@ import initialApplications from "../data/applications";
 
 function Dashboard() {
   const [applications, setApplications] = useState(initialApplications);
+  const [editApplication, setEditApplication] = useState(null);
 
   const stats = [
     {
@@ -41,18 +42,15 @@ function Dashboard() {
   ];
 
   function addApplication(newApplication) {
-    setApplications([
-      ...applications,
-      newApplication
-    ]);
+    setApplications([...applications, newApplication]);
   }
 
-  function deleteApplication(id){
+  function deleteApplication(id) {
     setApplications(
       applications.filter((application) => {
-        return application.id !== id
-      })
-    )
+        return application.id !== id;
+      }),
+    );
   }
 
   return (
@@ -72,10 +70,19 @@ function Dashboard() {
           })}
         </div>
         <div className="applications-section">
-          <ApplicationForm onAddApplication={addApplication} />
+          <ApplicationForm
+            key={editApplication?.id ?? "new"}
+            onAddApplication={addApplication}
+            editApplication={editApplication}
+          />
           {applications.map((application) => {
             return (
-              <ApplicationCard key={application.id} application={application} onDeleteApplication={deleteApplication}/>
+              <ApplicationCard
+                key={application.id}
+                application={application}
+                onDeleteApplication={deleteApplication}
+                onEditApplication={setEditApplication}
+              />
             );
           })}
         </div>
