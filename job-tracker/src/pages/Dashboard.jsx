@@ -53,6 +53,22 @@ function Dashboard() {
     );
   }
 
+  function cancelEdit() {
+    setEditApplication(null)
+  }
+
+  function updateApplication(updatedApplication) {
+    setApplications(
+    applications.map((application) => {
+      if(application.id === updatedApplication.id){
+        return updatedApplication
+      } else {
+        return application
+      }
+    })
+  )
+  }
+
   return (
     <div className="dashboard">
       <Sidebar />
@@ -73,7 +89,9 @@ function Dashboard() {
           <ApplicationForm
             key={editApplication?.id ?? "new"}
             onAddApplication={addApplication}
+            onUpdateApplication={updateApplication}
             editApplication={editApplication}
+            onCancelEdit={cancelEdit}
           />
           {applications.map((application) => {
             return (

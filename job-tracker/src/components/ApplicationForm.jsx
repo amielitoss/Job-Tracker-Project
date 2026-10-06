@@ -1,28 +1,40 @@
 import { useState } from "react";
 
-function ApplicationForm({ onAddApplication, editApplication}) {
-    const emptyForm = {
+function ApplicationForm({
+  onAddApplication,
+  editApplication,
+  onCancelEdit,
+  onUpdateApplication,
+}) {
+  const emptyForm = {
     company: "",
     role: "",
     status: "Applied",
     date: "",
     location: "",
     notes: "",
-  }
-  
-    const [formData, setFormData] = useState(
-    editApplication ?? emptyForm
-  );
+  };
+
+  const [formData, setFormData] = useState(editApplication ?? emptyForm);
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        const newApplication = {
-          id: crypto.randomUUID(),
-          ...formData,
-        };
-        onAddApplication(newApplication);
+
+        if (editApplication) {
+          onUpdateApplication({
+            id: editApplication.id,
+            ...formData,
+          });
+          onCancelEdit();
+        } else {
+          const newApplication = {
+            id: crypto.randomUUID(),
+            ...formData,
+          };
+          onAddApplication(newApplication);
+        }
         setFormData({
           company: "",
           role: "",
@@ -126,8 +138,14 @@ function ApplicationForm({ onAddApplication, editApplication}) {
         }}
       ></textarea>
 
-      <button type="submit">Add Application</button>
-
+      <button type="submit">
+        {editApplication ? "Save Changes" : "Add Application"}
+      </button>
+      {editApplication && (
+        <button type="button" onClick={onCancelEdit}>
+          Cancel
+        </button>
+      )}
     </form>
   );
 }
