@@ -9,6 +9,7 @@ import initialApplications from "../data/applications";
 function Dashboard() {
   const [applications, setApplications] = useState(initialApplications);
   const [editApplication, setEditApplication] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const stats = [
     {
@@ -54,20 +55,29 @@ function Dashboard() {
   }
 
   function cancelEdit() {
-    setEditApplication(null)
+    setEditApplication(null);
   }
 
   function updateApplication(updatedApplication) {
     setApplications(
-    applications.map((application) => {
-      if(application.id === updatedApplication.id){
-        return updatedApplication
-      } else {
-        return application
-      }
-    })
-  )
+      applications.map((application) => {
+        if (application.id === updatedApplication.id) {
+          return updatedApplication;
+        } else {
+          return application;
+        }
+      }),
+    );
   }
+
+  const filteredApplications = applications.filter((application) => {
+  if (
+    application.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    application.role.toLowerCase().includes(searchTerm.toLowerCase())
+  ) {
+    return true;
+  }
+});
 
   return (
     <div className="dashboard">
@@ -86,6 +96,14 @@ function Dashboard() {
           })}
         </div>
         <div className="applications-section">
+          <input
+            type="text"
+            placeholder="Search applications..."
+            value={searchTerm}
+            onChange={(event) => {
+              setSearchTerm(event.target.value);
+            }}
+          />
           <ApplicationForm
             key={editApplication?.id ?? "new"}
             onAddApplication={addApplication}
@@ -93,7 +111,7 @@ function Dashboard() {
             editApplication={editApplication}
             onCancelEdit={cancelEdit}
           />
-          {applications.map((application) => {
+          {filteredApplications.map((application) => {
             return (
               <ApplicationCard
                 key={application.id}

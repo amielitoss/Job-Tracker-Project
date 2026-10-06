@@ -2,7 +2,7 @@ const initialApplications = [
   {
     id: 1,
     company: "Example Company 1",
-    role: "Frontend Developer",
+    role: "Fullstack Developer",
     status: "Interview",
     date: "2026-05-11",
     location: "Remote",
@@ -20,7 +20,7 @@ const initialApplications = [
   {
     id: 3,
     company: "Example Company 3",
-    role: "Frontend Developer",
+    role: "Backend Developer",
     status: "Rejected",
     date: "2026-05-13",
     location: "Hybrid",

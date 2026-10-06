@@ -4,14 +4,13 @@ function ApplicationCard({
   onEditApplication,
   onUpdateApplication,
 }) {
-    
+
   return (
     <div className="application-card">
       <h3>{application.company}</h3>
       <p>{application.role}</p>
       <select
-        name=""
-        id=""
+        name="status"
         value={application.status}
         onChange={(event) => {
           onUpdateApplication({
