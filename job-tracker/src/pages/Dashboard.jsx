@@ -10,6 +10,7 @@ function Dashboard() {
   const [applications, setApplications] = useState(initialApplications);
   const [editApplication, setEditApplication] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
 
   const stats = [
     {
@@ -69,14 +70,16 @@ function Dashboard() {
       }),
     );
   }
+  
+  const normalizedSearch = searchTerm.toLowerCase();
 
   const filteredApplications = applications.filter((application) => {
-  if (
-    application.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    application.role.toLowerCase().includes(searchTerm.toLowerCase())
-  ) {
-    return true;
-  }
+    return (
+      (application.company.toLowerCase().includes(normalizedSearch) ||  application.role.toLowerCase().includes(normalizedSearch)) 
+      &&
+      (statusFilter === "All" || application.status === statusFilter) 
+    )
+
 });
 
   return (
@@ -104,6 +107,16 @@ function Dashboard() {
               setSearchTerm(event.target.value);
             }}
           />
+          <label htmlFor="statusFilter">Status</label>
+          <select name="statusFilter" id="statusFilter" value={statusFilter} onChange={(event) => {
+            setStatusFilter(event.target.value)
+          }}>
+            <option value="All">All</option>
+            <option value="Applied">Applied</option>
+            <option value="Interview">Interview</option>
+            <option value="Offer">Offer</option>
+            <option value="Rejected">Rejected</option>
+          </select>
           <ApplicationForm
             key={editApplication?.id ?? "new"}
             onAddApplication={addApplication}
