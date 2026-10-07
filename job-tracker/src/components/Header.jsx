@@ -1,4 +1,4 @@
-function Header() {
+function Header({ darkMode, setDarkMode }) {
     return (
         <header className="header">
             <div>
@@ -7,7 +7,7 @@ function Header() {
             </div>
 
         <div className="header-actions">
-            <button type="button">Dark mode</button>
+            <button type="button" className="theme-toggle" onClick={() => setDarkMode(!darkMode)}>{darkMode ? "☀️" : "🌙"}</button>
             <button type="button">Add application</button>
         </div>
         </header>

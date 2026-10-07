@@ -13,6 +13,11 @@ function Dashboard() {
   const [editApplication, setEditApplication] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ?? false);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode])
 
   useEffect(() => {
     localStorage.setItem("applications", JSON.stringify(applications));
@@ -88,10 +93,10 @@ function Dashboard() {
   });
 
   return (
-    <div className="dashboard">
+    <div className={darkMode ? "dashboard dark-mode" : "dashboard"}>
       <Sidebar />
       <div className="main-content">
-        <Header />
+        <Header darkMode={darkMode} setDarkMode={setDarkMode}/>
         <div className="stats-section">
           {stats.map((stat) => {
             return (
