@@ -3,14 +3,19 @@ import Sidebar from "../components/Sidebar";
 import StatCard from "../components/StatCard";
 import ApplicationCard from "../components/ApplicationCard";
 import ApplicationForm from "../components/ApplicationForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import initialApplications from "../data/applications";
 
 function Dashboard() {
-  const [applications, setApplications] = useState(initialApplications);
+  const [applications, setApplications] = useState(JSON.parse(localStorage.getItem("applications")) ?? initialApplications);
   const [editApplication, setEditApplication] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+
+  useEffect(() => {
+      localStorage.setItem("applications", JSON.stringify(applications));
+    }, [applications])
+  
 
   const stats = [
     {
