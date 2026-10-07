@@ -36,14 +36,7 @@ function ApplicationForm({
           };
           onAddApplication(newApplication);
         }
-        setFormData({
-          company: "",
-          role: "",
-          status: "Applied",
-          date: "",
-          location: "",
-          notes: "",
-        });
+          setFormData(emptyForm);
       }}
     >
       {/* Company */}
@@ -59,6 +52,7 @@ function ApplicationForm({
             company: event.target.value,
           });
         }}
+        required
       />
 
       {/* Role */}
@@ -74,6 +68,7 @@ function ApplicationForm({
             role: event.target.value,
           });
         }}
+        required
       />
 
       {/* Status */}
@@ -108,6 +103,7 @@ function ApplicationForm({
             date: event.target.value,
           });
         }}
+        required
       />
 
       {/* Location */}
@@ -123,6 +119,7 @@ function ApplicationForm({
             location: event.target.value,
           });
         }}
+        required
       />
 
       {/* Notes */}
