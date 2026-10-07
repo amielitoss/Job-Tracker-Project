@@ -139,9 +139,9 @@ function Dashboard() {
           />
 
           {applications.length === 0 ? (
-            <p>No Applications recorded.</p>
+            <p className="empty-state">No Applications recorded.</p>
           ) : filteredApplications.length === 0 ? (
-            <p>No applications match...</p>
+            <p className="empty-state">No applications match...</p>
           ) : (
             filteredApplications.map((application) => {
               return (
