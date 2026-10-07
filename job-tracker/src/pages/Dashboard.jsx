@@ -2,14 +2,24 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import StatCard from "../components/StatCard";
 import ApplicationForm from "../components/ApplicationForm";
+import ApplicationCard from "../components/ApplicationCard";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-function Dashboard({ applications, setApplications, updateApplication, editApplication, setEditApplication}) {
-  const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ?? false);
+function Dashboard({
+  applications,
+  setApplications,
+  updateApplication,
+  editApplication,
+  setEditApplication,
+}) {
+  const [darkMode, setDarkMode] = useState(
+    JSON.parse(localStorage.getItem("darkMode")) ?? false,
+  );
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
-  }, [darkMode])
+  }, [darkMode]);
 
   const stats = [
     {
@@ -50,13 +60,13 @@ function Dashboard({ applications, setApplications, updateApplication, editAppli
     setEditApplication(null);
   }
 
- 
+  const recentApplications = applications.slice(-5);
 
   return (
     <div className={darkMode ? "dashboard dark-mode" : "dashboard"}>
       <Sidebar />
       <div className="main-content">
-        <Header darkMode={darkMode} setDarkMode={setDarkMode}/>
+        <Header darkMode={darkMode} setDarkMode={setDarkMode} />
         <div className="stats-section">
           {stats.map((stat) => {
             return (
@@ -69,7 +79,6 @@ function Dashboard({ applications, setApplications, updateApplication, editAppli
           })}
         </div>
         <div className="applications-section">
-
           <ApplicationForm
             key={editApplication?.id ?? "new"}
             onAddApplication={addApplication}
@@ -78,6 +87,14 @@ function Dashboard({ applications, setApplications, updateApplication, editAppli
             onCancelEdit={cancelEdit}
           />
         </div>
+
+        <h2>Recent Applications</h2>
+        {recentApplications.map((application) => {
+          return (
+            <ApplicationCard key={application.id} application={application} />
+          );
+        })}
+         <Link to="/applications">View all applications</Link>
       </div>
     </div>
   );

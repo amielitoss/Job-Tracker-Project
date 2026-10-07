@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ApplicationCard from "../components/ApplicationCard";
 
 function Applications({
@@ -8,7 +8,6 @@ function Applications({
   updateApplication,
   setEditApplication,
 }) {
-
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,7 +25,10 @@ function Applications({
 
   return (
     <div className="applications-page">
-      <h2>All Applications</h2>
+      <div className="applications-header">
+        <Link to="/">JobTracker</Link>
+        <h2>All Applications</h2>
+      </div>
       <div className="application-filters">
         <input
           type="text"
