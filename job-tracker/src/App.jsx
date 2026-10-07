@@ -1,9 +1,48 @@
 import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard";
+import Applications from "./pages/Applications";
+import initialApplications from "./data/applications";
 
 function App() {
+    const [applications, setApplications] = useState(
+    JSON.parse(localStorage.getItem("applications")) ?? initialApplications,
+  );
+  const [editApplication, setEditApplication] = useState(null);
+
+    useEffect(() => {
+    localStorage.setItem("applications", JSON.stringify(applications));
+  }, [applications]);
+
+    function deleteApplication(id) {
+    setApplications(
+      applications.filter((application) => {
+        return application.id !== id;
+      }),
+    );
+  }
+
+   function updateApplication(updatedApplication) {
+    setApplications(
+      applications.map((application) => {
+        if (application.id === updatedApplication.id) {
+          return updatedApplication;
+        } else {
+          return application;
+        }
+      }),
+    );
+  }
+
   return  (
-    <Dashboard />
+    <Routes>
+       <Route path="/" element={<Dashboard applications={applications} setApplications={setApplications} updateApplication={updateApplication} editApplication={editApplication} setEditApplication={setEditApplication} />} />
+
+       <Route path="/applications" element={<Applications applications={applications} deleteApplication={deleteApplication} updateApplication={updateApplication}
+       setEditApplication={setEditApplication} />} />
+    </Routes>
+   
   )
 
 }
