@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import ApplicationCard from "../components/ApplicationCard";
+import logo from "../assets/jobtrackly-logo.webp";
+import icon from "../assets/jobtrackly-icon.webp";
 
 function Applications({
   applications,
@@ -30,7 +32,10 @@ function Applications({
       className={darkMode ? "applications-page dark-mode" : "applications-page"}
     >
       <div className="applications-header">
-        <Link to="/">JobTracker</Link>
+        <NavLink to="/" className="brand-link">
+          <img src={logo} alt="JobTrackly" className="brand-logo" />
+          <img src={icon} alt="" className="brand-icon" />
+        </NavLink>
         <h2>All Applications</h2>
         <button
           type="button"

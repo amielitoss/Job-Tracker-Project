@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
 import initialApplications from "./data/applications";
+import Footer from "./components/Footer";
 
 function App() {
     const [applications, setApplications] = useState(
@@ -43,13 +44,16 @@ function App() {
   }
 
   return  (
+    <>
     <Routes>
        <Route path="/" element={<Dashboard applications={applications} setApplications={setApplications} updateApplication={updateApplication} editApplication={editApplication} setEditApplication={setEditApplication} darkMode={darkMode} setDarkMode={setDarkMode}/>} />
 
        <Route path="/applications" element={<Applications applications={applications} deleteApplication={deleteApplication} updateApplication={updateApplication}
        setEditApplication={setEditApplication} darkMode={darkMode} setDarkMode={setDarkMode}/>} />
     </Routes>
-   
+
+    <Footer />
+   </>
   )
 
 }
