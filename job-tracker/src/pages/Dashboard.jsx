@@ -7,15 +7,16 @@ import { useEffect, useState } from "react";
 import initialApplications from "../data/applications";
 
 function Dashboard() {
-  const [applications, setApplications] = useState(JSON.parse(localStorage.getItem("applications")) ?? initialApplications);
+  const [applications, setApplications] = useState(
+    JSON.parse(localStorage.getItem("applications")) ?? initialApplications,
+  );
   const [editApplication, setEditApplication] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
 
   useEffect(() => {
-      localStorage.setItem("applications", JSON.stringify(applications));
-    }, [applications])
-  
+    localStorage.setItem("applications", JSON.stringify(applications));
+  }, [applications]);
 
   const stats = [
     {
@@ -75,17 +76,16 @@ function Dashboard() {
       }),
     );
   }
-  
+
   const normalizedSearch = searchTerm.toLowerCase();
 
   const filteredApplications = applications.filter((application) => {
     return (
-      (application.company.toLowerCase().includes(normalizedSearch) ||  application.role.toLowerCase().includes(normalizedSearch)) 
-      &&
-      (statusFilter === "All" || application.status === statusFilter) 
-    )
-
-});
+      (application.company.toLowerCase().includes(normalizedSearch) ||
+        application.role.toLowerCase().includes(normalizedSearch)) &&
+      (statusFilter === "All" || application.status === statusFilter)
+    );
+  });
 
   return (
     <div className="dashboard">
@@ -105,25 +105,31 @@ function Dashboard() {
         </div>
         <div className="applications-section">
           <div className="application-filters">
-          <input
-            type="text"
-            placeholder="Search applications..."
-            value={searchTerm}
-            onChange={(event) => {
-              setSearchTerm(event.target.value);
-            }}
-          />
-          <label htmlFor="statusFilter">Status</label>
-          <select name="statusFilter" id="statusFilter" value={statusFilter} onChange={(event) => {
-            setStatusFilter(event.target.value)
-          }}>
-            <option value="All">All</option>
-            <option value="Applied">Applied</option>
-            <option value="Interview">Interview</option>
-            <option value="Offer">Offer</option>
-            <option value="Rejected">Rejected</option>
-          </select>
+            <input
+              type="text"
+              placeholder="Search applications..."
+              value={searchTerm}
+              onChange={(event) => {
+                setSearchTerm(event.target.value);
+              }}
+            />
+            <label htmlFor="statusFilter">Status</label>
+            <select
+              name="statusFilter"
+              id="statusFilter"
+              value={statusFilter}
+              onChange={(event) => {
+                setStatusFilter(event.target.value);
+              }}
+            >
+              <option value="All">All</option>
+              <option value="Applied">Applied</option>
+              <option value="Interview">Interview</option>
+              <option value="Offer">Offer</option>
+              <option value="Rejected">Rejected</option>
+            </select>
           </div>
+
           <ApplicationForm
             key={editApplication?.id ?? "new"}
             onAddApplication={addApplication}
@@ -131,17 +137,24 @@ function Dashboard() {
             editApplication={editApplication}
             onCancelEdit={cancelEdit}
           />
-          {filteredApplications.map((application) => {
-            return (
-              <ApplicationCard
-                key={application.id}
-                application={application}
-                onDeleteApplication={deleteApplication}
-                onEditApplication={setEditApplication}
-                onUpdateApplication={updateApplication}
-              />
-            );
-          })}
+
+          {applications.length === 0 ? (
+            <p>No Applications recorded.</p>
+          ) : filteredApplications.length === 0 ? (
+            <p>No applications match...</p>
+          ) : (
+            filteredApplications.map((application) => {
+              return (
+                <ApplicationCard
+                  key={application.id}
+                  application={application}
+                  onDeleteApplication={deleteApplication}
+                  onEditApplication={setEditApplication}
+                  onUpdateApplication={updateApplication}
+                />
+              );
+            })
+          )}
         </div>
       </div>
     </div>
