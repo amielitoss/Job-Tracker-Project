@@ -322,6 +322,30 @@ body,
   font-size: 1.75rem;
 }
 
+.view-all-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  margin: 1rem 0 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--surface);
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.view-all-link:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
 /* responsive styles for smaller screens */
 @media (max-width: 1100px) {
   .stats-section {

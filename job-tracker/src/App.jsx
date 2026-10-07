@@ -9,7 +9,14 @@ function App() {
     const [applications, setApplications] = useState(
     JSON.parse(localStorage.getItem("applications")) ?? initialApplications,
   );
-  const [editApplication, setEditApplication] = useState(null);
+    const [editApplication, setEditApplication] = useState(null);
+    const [darkMode, setDarkMode] = useState(
+    JSON.parse(localStorage.getItem("darkMode")) ?? false,
+  );
+
+    useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
 
     useEffect(() => {
     localStorage.setItem("applications", JSON.stringify(applications));
@@ -37,10 +44,10 @@ function App() {
 
   return  (
     <Routes>
-       <Route path="/" element={<Dashboard applications={applications} setApplications={setApplications} updateApplication={updateApplication} editApplication={editApplication} setEditApplication={setEditApplication} />} />
+       <Route path="/" element={<Dashboard applications={applications} setApplications={setApplications} updateApplication={updateApplication} editApplication={editApplication} setEditApplication={setEditApplication} darkMode={darkMode} setDarkMode={setDarkMode}/>} />
 
        <Route path="/applications" element={<Applications applications={applications} deleteApplication={deleteApplication} updateApplication={updateApplication}
-       setEditApplication={setEditApplication} />} />
+       setEditApplication={setEditApplication} darkMode={darkMode} setDarkMode={setDarkMode}/>} />
     </Routes>
    
   )

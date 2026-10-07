@@ -7,6 +7,8 @@ function Applications({
   deleteApplication,
   updateApplication,
   setEditApplication,
+  darkMode,
+  setDarkMode,
 }) {
   const navigate = useNavigate();
 
@@ -24,10 +26,19 @@ function Applications({
   });
 
   return (
-    <div className="applications-page">
+    <div
+      className={darkMode ? "applications-page dark-mode" : "applications-page"}
+    >
       <div className="applications-header">
         <Link to="/">JobTracker</Link>
         <h2>All Applications</h2>
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={() => setDarkMode(!darkMode)}
+        >
+          {darkMode ? "☀️" : "🌙"}
+        </button>
       </div>
       <div className="application-filters">
         <input

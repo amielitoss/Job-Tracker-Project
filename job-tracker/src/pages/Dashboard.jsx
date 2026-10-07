@@ -3,7 +3,6 @@ import Sidebar from "../components/Sidebar";
 import StatCard from "../components/StatCard";
 import ApplicationForm from "../components/ApplicationForm";
 import ApplicationCard from "../components/ApplicationCard";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function Dashboard({
@@ -12,14 +11,12 @@ function Dashboard({
   updateApplication,
   editApplication,
   setEditApplication,
+  darkMode,
+  setDarkMode,
 }) {
-  const [darkMode, setDarkMode] = useState(
-    JSON.parse(localStorage.getItem("darkMode")) ?? false,
-  );
 
-  useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(darkMode));
-  }, [darkMode]);
+
+
 
   const stats = [
     {
@@ -94,7 +91,9 @@ function Dashboard({
             <ApplicationCard key={application.id} application={application} />
           );
         })}
-         <Link to="/applications">View all applications</Link>
+        <Link className="view-all-link" to="/applications">
+          View all applications
+        </Link>
       </div>
     </div>
   );
