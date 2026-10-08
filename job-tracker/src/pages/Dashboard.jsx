@@ -81,6 +81,11 @@ function Dashboard({
     closeForm();
   }
 
+  function addAndClose(newApplication){
+    addApplication(newApplication);
+    closeForm();
+  }
+
   const recentApplications = applications.slice(-5);
 
   return (
@@ -110,7 +115,7 @@ function Dashboard({
               <div className="modal-content">
                 <ApplicationForm
                   key={editApplication?.id ?? "new"}
-                  onAddApplication={addApplication}
+                  onAddApplication={addAndClose}
                   onUpdateApplication={updateAndClose}
                   editApplication={editApplication}
                   onCancelEdit={cancelEdit}
