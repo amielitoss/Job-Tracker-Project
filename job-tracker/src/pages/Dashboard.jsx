@@ -81,8 +81,6 @@ function Dashboard({
             editApplication={editApplication}
             onCancelEdit={cancelEdit}
           />
-        </div>
-
         <h2>Recent Applications</h2>
         {recentApplications.map((application) => {
           return (
@@ -92,6 +90,7 @@ function Dashboard({
         <Link className="view-all-link" to="/applications">
           View all applications
         </Link>
+        </div>
       </div>
     </div>
   );
