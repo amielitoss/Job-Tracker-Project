@@ -7,6 +7,7 @@ import initialApplications from "./data/applications";
 import Interviews from "./pages/Interviews";
 import Footer from "./components/Footer";
 import AppLayout from "./components/AppLayout";
+import Settings from "./pages/Settings";
 
 function App() {
   const [applications, setApplications] = useState(
@@ -81,9 +82,22 @@ function App() {
           <Route
             path="/interviews"
             element={
-              <Interviews darkMode={darkMode} setDarkMode={setDarkMode} applications={applications}/>
+              <Interviews
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+                applications={applications}
+              />
             }
           />
+
+          <Route
+            path="/settings"
+            element={<Settings darkMode={darkMode} setDarkMode={setDarkMode} 
+            setApplications={setApplications}
+             />
+            }
+          />
+
         </Route>
       </Routes>
       <Footer darkMode={darkMode} />
