@@ -15,7 +15,7 @@ function Dashboard({
   setDarkMode,
 }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isClosing, setIsClosing] =  useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const stats = [
     {
@@ -63,13 +63,21 @@ function Dashboard({
   function closeForm() {
     setIsClosing(true);
 
-  setTimeout(() => {
-    setIsClosing(false)
-    setIsFormOpen(false)
-  }, 2000);
-
+    setTimeout(() => {
+      setIsClosing(false);
+      setIsFormOpen(false);
+    }, 2000);
   }
 
+  function editApplicationForm(application) {
+    setEditApplication(application);
+    openForm();
+  }
+
+  function updateAndClose(updatedApplication) {
+  updateApplication(updatedApplication);
+  closeForm();
+}
 
   const recentApplications = applications.slice(-5);
 
@@ -94,12 +102,15 @@ function Dashboard({
         </div>
         <div className="applications-section">
           {isFormOpen && (
-            <div className={isClosing ? "modal-overlay closing" : "modal-overlay"} onClick={isClosing}>
+            <div
+              className={isClosing ? "modal-overlay closing" : "modal-overlay"}
+              onClick={isClosing}
+            >
               <div className="modal-content">
                 <ApplicationForm
                   key={editApplication?.id ?? "new"}
                   onAddApplication={addApplication}
-                  onUpdateApplication={updateApplication}
+                  onUpdateApplication={updateAndClose}
                   editApplication={editApplication}
                   onCancelEdit={cancelEdit}
                 />
@@ -112,7 +123,12 @@ function Dashboard({
           <h2>Recent Applications</h2>
           {recentApplications.map((application) => {
             return (
-              <ApplicationCard key={application.id} application={application} />
+              <ApplicationCard
+                key={application.id}
+                application={application}
+                onUpdateApplication={updateApplication}
+                onEditApplication={editApplicationForm}
+              />
             );
           })}
           <Link className="view-all-link" to="/applications">
