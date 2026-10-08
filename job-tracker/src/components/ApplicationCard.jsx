@@ -3,6 +3,7 @@ function ApplicationCard({
   onDeleteApplication,
   onEditApplication,
   onUpdateApplication,
+  onViewApplication
 }) {
 
   return (
@@ -43,6 +44,14 @@ function ApplicationCard({
         }}
       >
         Edit Application
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          onViewApplication(application);
+        }}
+      >
+        View Application 
       </button>
     </div>
     </div>

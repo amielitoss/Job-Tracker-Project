@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ApplicationCard from "../components/ApplicationCard";
-import logo from "../assets/jobtrackly-logo.webp";
-import icon from "../assets/jobtrackly-icon.webp";
+import ApplicationDetailsModal from "../components/ApplicationDetailsModal";
 
 function Applications({
   applications,
@@ -16,6 +15,7 @@ function Applications({
 
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [viewApp, setViewApp] = useState(null);
 
   const normalizedSearch = searchTerm.toLowerCase();
 
@@ -32,10 +32,6 @@ function Applications({
       className={darkMode ? "applications-page dark-mode" : "applications-page"}
     >
       <div className="applications-header">
-        <NavLink to="/" className="brand-link">
-          <img src={logo} alt="JobTrackly" className="brand-logo" />
-          <img src={icon} alt="" className="brand-icon" />
-        </NavLink>
         <h2>All Applications</h2>
         <button
           type="button"
@@ -71,6 +67,13 @@ function Applications({
         </select>
       </div>
 
+      {viewApp && (
+        <ApplicationDetailsModal
+          application={viewApp}
+          onClose={() => setViewApp(null)}
+        />
+      )}
+
       {applications.length === 0 ? (
         <p className="empty-state">No Applications recorded.</p>
       ) : filteredApplications.length === 0 ? (
@@ -87,6 +90,7 @@ function Applications({
                 setEditApplication(application);
                 navigate("/");
               }}
+              onViewApplication={(application) => setViewApp(application)}
             />
           );
         })

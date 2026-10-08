@@ -1,7 +1,8 @@
 import Header from "../components/Header";
 import StatCard from "../components/StatCard";
 import ApplicationForm from "../components/ApplicationForm";
-import ApplicationCard from "../components/ApplicationCard";
+import ApplicationDetailsModal from "../components/ApplicationDetailsModal";
+import RecentApplication from "../components/RecentApplications";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -16,6 +17,7 @@ function Dashboard({
 }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [viewApp, setViewApp] = useState(null);
 
   const stats = [
     {
@@ -66,7 +68,7 @@ function Dashboard({
     setTimeout(() => {
       setIsClosing(false);
       setIsFormOpen(false);
-    }, 2000);
+    }, 200);
   }
 
   function editApplicationForm(application) {
@@ -75,9 +77,9 @@ function Dashboard({
   }
 
   function updateAndClose(updatedApplication) {
-  updateApplication(updatedApplication);
-  closeForm();
-}
+    updateApplication(updatedApplication);
+    closeForm();
+  }
 
   const recentApplications = applications.slice(-5);
 
@@ -104,7 +106,6 @@ function Dashboard({
           {isFormOpen && (
             <div
               className={isClosing ? "modal-overlay closing" : "modal-overlay"}
-              onClick={isClosing}
             >
               <div className="modal-content">
                 <ApplicationForm
@@ -120,14 +121,21 @@ function Dashboard({
             </div>
           )}
 
+          {viewApp && (
+           <ApplicationDetailsModal
+            application={viewApp}
+            onClose={() => setViewApp(null)}
+            />
+          )}
+
           <h2>Recent Applications</h2>
           {recentApplications.map((application) => {
             return (
-              <ApplicationCard
-                key={application.id}
-                application={application}
-                onUpdateApplication={updateApplication}
-                onEditApplication={editApplicationForm}
+              <RecentApplication 
+              key={application.id}
+              application={application}
+              onViewApplication={(application) => setViewApp(application)}
+              onEditApplication={editApplicationForm}
               />
             );
           })}

@@ -540,8 +540,130 @@ body,
   outline-offset: 3px;
 }
 
+.application-detail {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.application-detail:last-of-type {
+  border-bottom: none;
+}
+
+.application-detail span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.application-detail h2,
+.application-detail p {
+  margin: 0;
+  color: var(--text);
+}
+
+.application-detail h2 {
+  font-size: 1.4rem;
+}
+
+.application-detail p {
+  line-height: 1.5;
+}
 
 
+.recent-application {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 1.5rem;
+
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+}
+
+.recent-application-info {
+  display: grid;
+  grid-template-columns: 1.2fr 1.5fr 1fr 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.recent-application-info p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.recent-application-info p:first-child {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.recent-application-status p {
+  margin: 0;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.recent-application-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.recent-application-actions button {
+  padding: 0.55rem 0.8rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.recent-application-actions button:first-child {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.recent-application-actions button:hover {
+  transform: translateY(-1px);
+}
+
+.status-applied p {
+  background: #e8eefc;
+  color: #34518a;
+  border-color: #cbd8f4;
+}
+
+.status-interview p {
+  background: #fff4d6;
+  color: #8a6200;
+  border-color: #f3d98b;
+}
+
+.status-offer p {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.status-rejected p {
+  background: #fde8e8;
+  color: #991b1b;
+  border-color: #fecaca;
+}
 
 
 
@@ -563,6 +685,23 @@ body,
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+@media (max-width: 900px) {
+  .recent-application {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .recent-application-info {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .recent-application-actions {
+    justify-content: flex-start;
+  }
+}
+
+
 
 @media (max-width: 700px) {
   .sidebar {
@@ -630,5 +769,12 @@ body,
 
   .app-content {
     padding-top: 4.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .recent-application-info {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
   }
 }
