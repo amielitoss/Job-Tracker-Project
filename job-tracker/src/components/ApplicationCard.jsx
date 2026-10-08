@@ -11,6 +11,7 @@ function ApplicationCard({
       <h3>{application.company}</h3>
       <p>{application.role}</p>
       <select
+      className={`application-status status-${application.status.toLowerCase()}`}
         name="status"
         value={application.status}
         onChange={(event) => {
@@ -31,6 +32,7 @@ function ApplicationCard({
       <div className="application-card-actions">
       <button
         type="button"
+        className="delete-button"
         onClick={() => {
           onDeleteApplication(application.id);
         }}
@@ -38,6 +40,7 @@ function ApplicationCard({
         Delete Application
       </button>
       <button
+      className="edit-button"
         type="button"
         onClick={() => {
           onEditApplication(application);
@@ -46,6 +49,7 @@ function ApplicationCard({
         Edit Application
       </button>
       <button
+      className="view-button"
         type="button"
         onClick={() => {
           onViewApplication(application);
