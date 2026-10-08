@@ -3,6 +3,8 @@ import StatCard from "../components/StatCard";
 import ApplicationForm from "../components/ApplicationForm";
 import ApplicationDetailsModal from "../components/ApplicationDetailsModal";
 import RecentApplication from "../components/RecentApplications";
+import StatusChart from "../components/StatusChart";
+import ApplicationsChart from "../components/ApplicationsChart";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -54,10 +56,6 @@ function Dashboard({
     setApplications([...applications, newApplication]);
   }
 
-  function cancelEdit() {
-    setEditApplication(null);
-  }
-
   function openForm() {
     setIsFormOpen(true);
   }
@@ -68,6 +66,7 @@ function Dashboard({
     setTimeout(() => {
       setIsClosing(false);
       setIsFormOpen(false);
+      setEditApplication(null);
     }, 200);
   }
 
@@ -81,7 +80,7 @@ function Dashboard({
     closeForm();
   }
 
-  function addAndClose(newApplication){
+  function addAndClose(newApplication) {
     addApplication(newApplication);
     closeForm();
   }
@@ -107,18 +106,27 @@ function Dashboard({
             );
           })}
         </div>
+
+        <div className="charts-section">
+          <ApplicationsChart applications={applications} />
+          <StatusChart applications={applications} />
+        </div>
+        
         <div className="applications-section">
           {isFormOpen && (
             <div
               className={isClosing ? "modal-overlay closing" : "modal-overlay"}
             >
               <div className="modal-content">
+                <h2>
+                  {editApplication ? "Edit Application" : "Add Application"}
+                </h2>
                 <ApplicationForm
                   key={editApplication?.id ?? "new"}
                   onAddApplication={addAndClose}
                   onUpdateApplication={updateAndClose}
                   editApplication={editApplication}
-                  onCancelEdit={cancelEdit}
+                  onCancelEdit={closeForm}
                 />
 
                 <button onClick={closeForm}>✕</button>
@@ -127,20 +135,20 @@ function Dashboard({
           )}
 
           {viewApp && (
-           <ApplicationDetailsModal
-            application={viewApp}
-            onClose={() => setViewApp(null)}
+            <ApplicationDetailsModal
+              application={viewApp}
+              onClose={() => setViewApp(null)}
             />
           )}
 
           <h2>Recent Applications</h2>
           {recentApplications.map((application) => {
             return (
-              <RecentApplication 
-              key={application.id}
-              application={application}
-              onViewApplication={(application) => setViewApp(application)}
-              onEditApplication={editApplicationForm}
+              <RecentApplication
+                key={application.id}
+                application={application}
+                onViewApplication={(application) => setViewApp(application)}
+                onEditApplication={editApplicationForm}
               />
             );
           })}

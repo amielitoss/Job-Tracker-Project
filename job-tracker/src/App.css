@@ -247,7 +247,7 @@ body,
 }
 
 .applications-section {
-   margin: 2rem 1.5rem 0;
+  margin: 2rem 1.5rem 0;
 }
 
 .application-card-actions {
@@ -573,7 +573,6 @@ body,
   line-height: 1.5;
 }
 
-
 .recent-application {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto auto;
@@ -665,19 +664,41 @@ body,
   border-color: #fecaca;
 }
 
+.status-chart {
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
 
+.status-chart h2 {
+  margin: 0 0 1rem;
+  color: var(--text);
+  font-size: 1.1rem;
+}
 
+.charts-section {
+  display: grid;
+  grid-template-columns: 1.4fr 2fr;
+  gap: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
+}
 
+.applications-chart,
+.status-chart {
+  min-width: 0;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
 
-
-
-
-
-
-
-
-
-
+.applications-chart h2,
+.status-chart h2 {
+  margin: 0 0 1rem;
+  color: var(--text);
+  font-size: 1.1rem;
+}
 
 /* responsive styles for smaller screens */
 @media (max-width: 1100px) {
@@ -699,9 +720,11 @@ body,
   .recent-application-actions {
     justify-content: flex-start;
   }
+
+  .charts-section {
+    grid-template-columns: 1fr;
+  }
 }
-
-
 
 @media (max-width: 700px) {
   .sidebar {
@@ -721,7 +744,7 @@ body,
   }
 
   .applications-section {
-     margin: 2rem 1.5rem 0;
+    margin: 2rem 1rem 0;
   }
 
   .applications-header {
@@ -769,6 +792,16 @@ body,
 
   .app-content {
     padding-top: 4.5rem;
+  }
+
+  .charts-section {
+    padding: 0 1rem 1rem;
+  }
+
+  .applications-chart,
+  .status-chart {
+    padding: 1rem;
+    min-height: 0;
   }
 }
 

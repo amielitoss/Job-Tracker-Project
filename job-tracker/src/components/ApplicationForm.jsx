@@ -139,6 +139,7 @@ function ApplicationForm({
       <button type="submit">
         {editApplication ? "Save Changes" : "Add Application"}
       </button>
+
       {editApplication && (
         <button type="button" onClick={onCancelEdit}>
           Cancel
