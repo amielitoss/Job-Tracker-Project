@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
 import initialApplications from "./data/applications";
 import Footer from "./components/Footer";
+import AppLayout from "./components/AppLayout";
 
 function App() {
     const [applications, setApplications] = useState(
@@ -46,13 +47,14 @@ function App() {
   return  (
     <>
     <Routes>
+      <Route element={<AppLayout darkMode={darkMode}/>}>
        <Route path="/" element={<Dashboard applications={applications} setApplications={setApplications} updateApplication={updateApplication} editApplication={editApplication} setEditApplication={setEditApplication} darkMode={darkMode} setDarkMode={setDarkMode}/>} />
 
        <Route path="/applications" element={<Applications applications={applications} deleteApplication={deleteApplication} updateApplication={updateApplication}
        setEditApplication={setEditApplication} darkMode={darkMode} setDarkMode={setDarkMode}/>} />
+       </Route>
     </Routes>
-
-    <Footer />
+    <Footer darkMode={darkMode}/>
    </>
   )
 

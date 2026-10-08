@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../assets/jobtrackly-logo.webp";
 import icon from "../assets/jobtrackly-icon.webp";
 
-function Sidebar() {
+function Sidebar({ onNavigate }) {
   return (
     <aside className="sidebar">
       <NavLink to="/" className="brand-link">
@@ -10,10 +10,10 @@ function Sidebar() {
         <img src={icon} alt="" className="brand-icon" />
       </NavLink>
       <nav>
-        <NavLink to="/">Dashboard</NavLink>
-        <NavLink to="/applications">Applications</NavLink>
-        <NavLink to="/interviews">Interviews</NavLink>
-        <NavLink to="/settings">Settings</NavLink>
+        <NavLink to="/" onClick={onNavigate}>Dashboard</NavLink>
+        <NavLink to="/applications" onClick={onNavigate}>Applications</NavLink>
+        <NavLink to="/interviews" onClick={onNavigate}>Interviews</NavLink>
+        <NavLink to="/settings" onClick={onNavigate}>Settings</NavLink>
       </nav>
     </aside>
   );

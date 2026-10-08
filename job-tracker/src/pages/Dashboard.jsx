@@ -1,5 +1,4 @@
 import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
 import StatCard from "../components/StatCard";
 import ApplicationForm from "../components/ApplicationForm";
 import ApplicationCard from "../components/ApplicationCard";
@@ -61,7 +60,6 @@ function Dashboard({
 
   return (
     <div className={darkMode ? "dashboard dark-mode" : "dashboard"}>
-      <Sidebar />
       <div className="main-content">
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
         <div className="stats-section">
