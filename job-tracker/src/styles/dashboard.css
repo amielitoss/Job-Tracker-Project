@@ -1,0 +1,249 @@
+.dashboard {
+  min-height: 100vh;
+}
+
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.header h2 {
+  margin: 0;
+}
+
+.header p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.card-wrapper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.25rem;
+}
+
+.card-wrapper p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card-wrapper span {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.view-all-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  margin: 1rem 0 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--surface);
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.view-all-link:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.add-application-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: var(--primary);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgb(79 70 229 / 20%);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.add-application-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgb(79 70 229 / 28%);
+}
+
+.add-application-button:active {
+  transform: translateY(0);
+}
+
+.add-application-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.applications-section {
+  margin: 2rem 1.5rem 0;
+}
+
+.recent-application {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 1.5rem;
+
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+}
+
+.recent-application-info {
+  display: grid;
+  grid-template-columns: 1.2fr 1.5fr 1fr 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.recent-application-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.recent-application-info p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.recent-application-info p:first-child {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.recent-application-status p {
+  margin: 0;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.recent-application-actions button {
+  padding: 0.55rem 0.8rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.recent-application-actions button:first-child {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.recent-application-actions button:hover {
+  transform: translateY(-1px);
+}
+
+.status-applied p {
+  background: #e8eefc;
+  color: #34518a;
+  border-color: #cbd8f4;
+}
+
+.status-interview p {
+  background: #fff4d6;
+  color: #8a6200;
+  border-color: #f3d98b;
+}
+
+.status-offer p {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.status-rejected p {
+  background: #fde8e8;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.status-chart {
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+
+.status-chart h2 {
+  margin: 0 0 1rem;
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+.charts-section {
+  display: grid;
+  grid-template-columns: 1.4fr 2fr;
+  gap: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.applications-chart,
+.status-chart {
+  min-width: 0;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+
+.applications-chart h2,
+.status-chart h2 {
+  margin: 0 0 1rem;
+  color: var(--text);
+  font-size: 1.1rem;
+}

@@ -6,7 +6,7 @@ import RecentApplication from "../components/RecentApplications";
 import StatusChart from "../components/StatusChart";
 import ApplicationsChart from "../components/ApplicationsChart";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Dashboard({
   applications,
@@ -20,6 +20,18 @@ function Dashboard({
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [viewApp, setViewApp] = useState(null);
+
+  useEffect(() => {
+  if (isFormOpen || editApplication) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [isFormOpen, editApplication]);
 
   const stats = [
     {
@@ -113,7 +125,7 @@ function Dashboard({
         </div>
         
         <div className="applications-section">
-          {isFormOpen && (
+          {(isFormOpen || editApplication )&& (
             <div
               className={isClosing ? "modal-overlay closing" : "modal-overlay"}
             >

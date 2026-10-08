@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard";
@@ -8,6 +7,8 @@ import Interviews from "./pages/Interviews";
 import Footer from "./components/Footer";
 import AppLayout from "./components/AppLayout";
 import Settings from "./pages/Settings";
+import "./App.css";
+
 
 function App() {
   const [applications, setApplications] = useState(
