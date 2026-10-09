@@ -1,7 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Settings({ darkMode, setDarkMode, setApplications }) {
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isClearModalOpen) {
+      return;
+    }
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setIsClearModalOpen(false);
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isClearModalOpen]);
+
+  useEffect(() => {
+    if (isClearModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isClearModalOpen]);
 
   return (
     <div className={darkMode ? "settings-page dark-mode" : "settings-page"}>

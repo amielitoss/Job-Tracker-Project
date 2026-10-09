@@ -6,8 +6,14 @@ import RecentApplication from "../components/RecentApplications";
 import StatusChart from "../components/StatusChart";
 import ApplicationsChart from "../components/ApplicationsChart";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { BriefcaseBusiness, Send, CalendarCheck, BadgeCheck, CircleX } from "lucide-react";
+import { useEffect, useState, useCallback } from "react";
+import {
+  BriefcaseBusiness,
+  Send,
+  CalendarCheck,
+  BadgeCheck,
+  CircleX,
+} from "lucide-react";
 
 function Dashboard({
   applications,
@@ -22,24 +28,50 @@ function Dashboard({
   const [isClosing, setIsClosing] = useState(false);
   const [viewApp, setViewApp] = useState(null);
 
+  const closeForm = useCallback(() => {
+    setIsClosing(true);
+
+    setTimeout(() => {
+      setIsClosing(false);
+      setIsFormOpen(false);
+      setEditApplication(null);
+    }, 200);
+  }, [setEditApplication]);
+
   useEffect(() => {
-    if (isFormOpen || editApplication) {
-      document.body.style.overflow = "hidden";
-    } else {
+    if (!(isFormOpen || editApplication)) {
       document.body.style.overflow = "";
+      return;
     }
+    document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = "";
     };
   }, [isFormOpen, editApplication]);
 
+  useEffect(() => {
+    if (!isFormOpen && !editApplication) {
+      return;
+    }
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        closeForm();
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isFormOpen, editApplication, closeForm]);
+
   const stats = [
     {
       label: "Total Applications",
       value: applications.length,
       icon: BriefcaseBusiness,
-      type: "total"
+      type: "total",
     },
     {
       label: "Interviews",
@@ -47,7 +79,7 @@ function Dashboard({
         return application.status === "Interview";
       }).length,
       icon: CalendarCheck,
-      type: "interview"
+      type: "interview",
     },
     {
       label: "Offers",
@@ -55,7 +87,7 @@ function Dashboard({
         return application.status === "Offer";
       }).length,
       icon: BadgeCheck,
-      type: "offer"
+      type: "offer",
     },
     {
       label: "Rejected",
@@ -63,7 +95,7 @@ function Dashboard({
         return application.status === "Rejected";
       }).length,
       icon: CircleX,
-      type: "rejected"
+      type: "rejected",
     },
     {
       label: "Applied",
@@ -71,7 +103,7 @@ function Dashboard({
         return application.status === "Applied";
       }).length,
       icon: Send,
-      type: "applied"
+      type: "applied",
     },
   ];
 
@@ -81,16 +113,6 @@ function Dashboard({
 
   function openForm() {
     setIsFormOpen(true);
-  }
-
-  function closeForm() {
-    setIsClosing(true);
-
-    setTimeout(() => {
-      setIsClosing(false);
-      setIsFormOpen(false);
-      setEditApplication(null);
-    }, 200);
   }
 
   function editApplicationForm(application) {
@@ -154,7 +176,9 @@ function Dashboard({
                   onCancelEdit={closeForm}
                 />
 
-                <button onClick={closeForm}>✕</button>
+                <button onClick={closeForm} aria-label="Close application form">
+                  ✕
+                </button>
               </div>
             </div>
           )}

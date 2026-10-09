@@ -6,7 +6,7 @@ import { LayoutDashboard,BriefcaseBusiness,CalendarCheck, Settings } from "lucid
 function Sidebar({ onNavigate }) {
   return (
     <aside className="sidebar">
-      <NavLink to="/" className="brand-link">
+      <NavLink to="/" className="brand-link" aria-label="Go to JobTrackly dashboard">
         <img src={logo} alt="JobTrackly" className="brand-logo" />
         <img src={icon} alt="" className="brand-icon" />
       </NavLink>
