@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
-import initialApplications from "./data/applications";
 import Interviews from "./pages/Interviews";
 import Footer from "./components/Footer";
 import AppLayout from "./components/AppLayout";
@@ -12,7 +11,7 @@ import "./App.css";
 
 function App() {
   const [applications, setApplications] = useState(
-    JSON.parse(localStorage.getItem("applications")) ?? initialApplications,
+    JSON.parse(localStorage.getItem("applications")) ?? [],
   );
   const [editApplication, setEditApplication] = useState(null);
   const [darkMode, setDarkMode] = useState(
