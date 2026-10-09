@@ -212,3 +212,7 @@ Building JobTrackly helped me practice:
 **Carl Amiel Balita**
 
 Web Developer focused on React and currently progressing toward full-stack development.
+
+## Live Demo
+
+[View JobTrackly Live](https://jobtrackly.netlify.app)
