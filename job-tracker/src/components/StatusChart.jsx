@@ -1,4 +1,4 @@
-import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 function StatusChart({ applications }) {
   const data = [
@@ -33,22 +33,18 @@ function StatusChart({ applications }) {
   ];
 
   return (
-  <div className="status-chart">
-    <h2>Status Distribution</h2>
+    <div className="status-chart">
+      <h2>Status Distribution</h2>
 
-    <ResponsiveContainer width="100%" height={240}>
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="name"
-          outerRadius={100}
-        />
-        <Tooltip />
-      </PieChart>
-    </ResponsiveContainer>
-  </div>
-);
+      <ResponsiveContainer width="100%" height={240}>
+        <PieChart>
+          <Pie data={data} dataKey="value" nameKey="name" outerRadius={100} />
+          <Tooltip />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+  );
 }
 
 export default StatusChart;

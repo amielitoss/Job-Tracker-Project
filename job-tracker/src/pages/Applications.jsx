@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ApplicationCard from "../components/ApplicationCard";
 import ApplicationDetailsModal from "../components/ApplicationDetailsModal";
+import { Sun, Moon } from "lucide-react";
 
 function Applications({
   applications,
@@ -38,7 +39,7 @@ function Applications({
           className="theme-toggle"
           onClick={() => setDarkMode(!darkMode)}
         >
-          {darkMode ? "☀️" : "🌙"}
+          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
         </button>
       </div>
       <div className="application-filters">

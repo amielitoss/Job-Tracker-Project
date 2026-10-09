@@ -7,6 +7,7 @@ import StatusChart from "../components/StatusChart";
 import ApplicationsChart from "../components/ApplicationsChart";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { BriefcaseBusiness, Send, CalendarCheck, BadgeCheck, CircleX } from "lucide-react";
 
 function Dashboard({
   applications,
@@ -22,45 +23,55 @@ function Dashboard({
   const [viewApp, setViewApp] = useState(null);
 
   useEffect(() => {
-  if (isFormOpen || editApplication) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "";
-  }
+    if (isFormOpen || editApplication) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
 
-  return () => {
-    document.body.style.overflow = "";
-  };
-}, [isFormOpen, editApplication]);
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isFormOpen, editApplication]);
 
   const stats = [
     {
       label: "Total Applications",
       value: applications.length,
+      icon: BriefcaseBusiness,
+      type: "total"
     },
     {
       label: "Interviews",
       value: applications.filter((application) => {
         return application.status === "Interview";
       }).length,
+      icon: CalendarCheck,
+      type: "interview"
     },
     {
       label: "Offers",
       value: applications.filter((application) => {
         return application.status === "Offer";
       }).length,
+      icon: BadgeCheck,
+      type: "offer"
     },
     {
       label: "Rejected",
       value: applications.filter((application) => {
         return application.status === "Rejected";
       }).length,
+      icon: CircleX,
+      type: "rejected"
     },
     {
       label: "Applied",
       value: applications.filter((application) => {
         return application.status === "Applied";
       }).length,
+      icon: Send,
+      type: "applied"
     },
   ];
 
@@ -114,6 +125,8 @@ function Dashboard({
                 key={stat.label}
                 label={stat.label}
                 value={stat.value}
+                icon={stat.icon}
+                type={stat.type}
               />
             );
           })}
@@ -123,9 +136,9 @@ function Dashboard({
           <ApplicationsChart applications={applications} />
           <StatusChart applications={applications} />
         </div>
-        
+
         <div className="applications-section">
-          {(isFormOpen || editApplication )&& (
+          {(isFormOpen || editApplication) && (
             <div
               className={isClosing ? "modal-overlay closing" : "modal-overlay"}
             >

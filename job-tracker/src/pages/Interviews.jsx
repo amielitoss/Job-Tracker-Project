@@ -1,3 +1,5 @@
+import { Sun, Moon } from "lucide-react";
+
 function Interviews({ darkMode, setDarkMode, applications }) {
   const interviews = applications.filter((application) => {
     return application.status === "Interview";
@@ -12,7 +14,7 @@ function Interviews({ darkMode, setDarkMode, applications }) {
           className="theme-toggle"
           onClick={() => setDarkMode(!darkMode)}
         >
-          {darkMode ? "☀️" : "🌙"}
+          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
         </button>
       </div>
 
