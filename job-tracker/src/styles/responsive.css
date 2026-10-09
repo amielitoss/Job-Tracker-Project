@@ -128,4 +128,13 @@
     grid-template-columns: 1fr;
     gap: 0.35rem;
   }
+
+  .recent-application-status {
+    width: fit-content;
+    justify-self: start;
+  }
+
+  .recent-application-status p {
+    width: fit-content;
+  }
 }

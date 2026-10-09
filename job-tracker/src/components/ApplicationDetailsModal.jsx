@@ -1,7 +1,7 @@
 function ApplicationDetailsModal({ application, onClose}) {
     return (
            <div className="modal-overlay">
-              <div className="modal-content">
+              <div className="modal-content" role="dialog" aria-modal="true">
                 <div className="application-detail">
                   <span>Company:</span>
                   <h2>{application.company}</h2>

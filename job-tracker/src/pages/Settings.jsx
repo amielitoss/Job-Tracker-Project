@@ -50,7 +50,7 @@ function Settings({ darkMode, setDarkMode, setApplications }) {
 
       {isClearModalOpen && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" role="dialog" aria-modal="true">
             <h3>Clear all applications?</h3>
             <p>This will remove all saved applications from JobTrackly.</p>
 

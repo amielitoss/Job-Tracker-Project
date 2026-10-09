@@ -142,7 +142,7 @@ function Dashboard({
             <div
               className={isClosing ? "modal-overlay closing" : "modal-overlay"}
             >
-              <div className="modal-content">
+              <div className="modal-content" role="dialog" aria-modal="true">
                 <h2>
                   {editApplication ? "Edit Application" : "Add Application"}
                 </h2>
