@@ -1,6 +1,12 @@
 import { Sun, Moon } from "lucide-react";
 
-function Header({ darkMode, setDarkMode, onOpenForm }) {
+type HeaderProps = {
+    darkMode:  boolean;
+    setDarkMode: (value: boolean) => void;
+    onOpenForm: () => void;
+};
+
+function Header({ darkMode, setDarkMode, onOpenForm }: HeaderProps) {
     return (
         <header className="header">
             <div>
@@ -9,7 +15,7 @@ function Header({ darkMode, setDarkMode, onOpenForm }) {
             </div>
 
         <div className="header-actions">
-            <button type="button" aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"} className="theme-toggle" onClick={() => setDarkMode(!darkMode)}>{darkMode ? <Sun size={18} />: <Moon size={18} />}</button>
+            <button type="button" aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"} className="theme-toggle" onClick={() => setDarkMode(!darkMode)}>{darkMode ? <Sun size={18} /> : <Moon size={18} />}</button>
             <button type="button" className="add-application-button" onClick={onOpenForm}>Add application</button>
         </div>
         </header>
