@@ -3,7 +3,11 @@ import logo from "../assets/jobtrackly-logo.webp";
 import icon from "../assets/jobtrackly-icon.webp";
 import { LayoutDashboard,BriefcaseBusiness,CalendarCheck, Settings } from "lucide-react";
 
-function Sidebar({ onNavigate }) {
+type SidebarProps = {
+  onNavigate: () => void;
+};
+
+function Sidebar({ onNavigate }: SidebarProps) {
   return (
     <aside className="sidebar">
       <NavLink to="/" className="brand-link" aria-label="Go to JobTrackly dashboard">
