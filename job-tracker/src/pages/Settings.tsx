@@ -1,6 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type KeyboardEventHandler } from "react";
+import type { Application } from "../types/types";
 
-function Settings({ darkMode, setDarkMode, setApplications }) {
+
+type SettingsProps = {
+  darkMode: boolean;
+  setDarkMode: (darkMode: boolean) => void;
+  setApplications: (application: Application[]) => void;
+};
+
+function Settings({ darkMode, setDarkMode, setApplications }: SettingsProps) {
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
 
   useEffect(() => {
@@ -8,7 +16,7 @@ function Settings({ darkMode, setDarkMode, setApplications }) {
       return;
     }
 
-    function handleKeyDown(event) {
+    function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setIsClearModalOpen(false);
       }
