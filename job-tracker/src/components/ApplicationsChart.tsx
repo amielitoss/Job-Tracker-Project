@@ -7,8 +7,13 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import type { Application } from "../types/types";
 
-function ApplicationsChart({ applications }) {
+type ApplicationsChartProps = {
+  applications: Application[];
+}
+
+function ApplicationsChart({ applications }: ApplicationsChartProps) {
   const months = [
     "Jan",
     "Feb",
