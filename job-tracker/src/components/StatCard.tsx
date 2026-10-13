@@ -1,4 +1,13 @@
-function StatCard({ label, value, icon, type }) {
+import type { LucideIcon } from "lucide-react";
+
+type StatCardProps = {
+  label: string;
+  value: number;
+  icon: LucideIcon;
+  type: "total" | "interview" | "offer" | "rejected" | "applied";
+};
+
+function StatCard({ label, value, icon, type }: StatCardProps) {
   const Icon = icon;
   return (
     <div className="card-wrapper">
