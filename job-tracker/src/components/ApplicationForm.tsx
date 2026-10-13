@@ -87,7 +87,7 @@ function ApplicationForm({
         id="status"
         value={formData.status}
         onChange={(event) => {
-          const newStatus = event.target.value as ApplicationStatus
+          const newStatus = event.target.value as ApplicationStatus;
           setFormData({
             ...formData,
             status: newStatus,

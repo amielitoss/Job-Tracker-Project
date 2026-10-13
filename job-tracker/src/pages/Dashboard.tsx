@@ -14,6 +14,28 @@ import {
   BadgeCheck,
   CircleX,
 } from "lucide-react";
+import type { Application } from "../types/types";
+import type { LucideIcon } from "lucide-react";
+
+type Stat = {
+  label: string;
+  value: number;
+  icon: LucideIcon;
+  type: "total" | "interview" | "offer" | "rejected" | "applied";
+};
+
+
+type DashboardProps = {
+  applications: Application[];
+  setApplications: (applications: Application[]) => void;
+  updateApplication: (application: Application) => void;
+  editApplication: Application | null;
+  setEditApplication: (parameter: Application | null) => void;
+  darkMode: boolean;
+  setDarkMode: (darkMode: boolean) => void;
+};
+
+
 
 function Dashboard({
   applications,
@@ -23,10 +45,10 @@ function Dashboard({
   setEditApplication,
   darkMode,
   setDarkMode,
-}) {
+}: DashboardProps) {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [viewApp, setViewApp] = useState(null);
+  const [viewApp, setViewApp] = useState<Application | null>(null);
 
   const closeForm = useCallback(() => {
     setIsClosing(true);
@@ -54,7 +76,7 @@ function Dashboard({
     if (!isFormOpen && !editApplication) {
       return;
     }
-    function handleKeyDown(event) {
+    function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         closeForm();
       }
@@ -66,7 +88,7 @@ function Dashboard({
     };
   }, [isFormOpen, editApplication, closeForm]);
 
-  const stats = [
+  const stats: Stat[] = [
     {
       label: "Total Applications",
       value: applications.length,
@@ -107,7 +129,7 @@ function Dashboard({
     },
   ];
 
-  function addApplication(newApplication) {
+  function addApplication(newApplication: Application) {
     setApplications([...applications, newApplication]);
   }
 
@@ -115,17 +137,17 @@ function Dashboard({
     setIsFormOpen(true);
   }
 
-  function editApplicationForm(application) {
+  function editApplicationForm(application: Application) {
     setEditApplication(application);
     openForm();
   }
 
-  function updateAndClose(updatedApplication) {
+  function updateAndClose(updatedApplication: Application) {
     updateApplication(updatedApplication);
     closeForm();
   }
 
-  function addAndClose(newApplication) {
+  function addAndClose(newApplication: Application) {
     addApplication(newApplication);
     closeForm();
   }
