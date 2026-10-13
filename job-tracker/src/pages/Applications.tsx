@@ -3,6 +3,16 @@ import { useNavigate } from "react-router-dom";
 import ApplicationCard from "../components/ApplicationCard";
 import ApplicationDetailsModal from "../components/ApplicationDetailsModal";
 import { Sun, Moon } from "lucide-react";
+import type { Application } from "../types/types";
+
+type ApplicationsProps = {
+  applications: Application[];
+  deleteApplication: (id: string) => void;
+  updateApplication: (application: Application) => void;
+  setEditApplication: (parameter: Application | null) => void;
+  darkMode: boolean;
+  setDarkMode: (darkMode: boolean) => void;
+};
 
 function Applications({
   applications,
@@ -11,12 +21,12 @@ function Applications({
   setEditApplication,
   darkMode,
   setDarkMode,
-}) {
+}: ApplicationsProps) {
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
-  const [viewApp, setViewApp] = useState(null);
+  const [viewApp, setViewApp] = useState<Application | null>(null);
 
   const normalizedSearch = searchTerm.toLowerCase();
 
