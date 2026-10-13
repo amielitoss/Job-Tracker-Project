@@ -1,10 +1,20 @@
+import type { Application, ApplicationStatus } from "../types/types";
+
+type ApplicationCardProps = {
+  application: Application
+  onDeleteApplication: (id: number) => void;
+  onEditApplication: (application: Application) => void;
+  onUpdateApplication: (application: Application) => void;
+  onViewApplication: (application: Application) => void;
+};
+
 function ApplicationCard({
   application,
   onDeleteApplication,
   onEditApplication,
   onUpdateApplication,
   onViewApplication
-}) {
+}: ApplicationCardProps) { 
 
   return (
     <div className="application-card">
@@ -15,9 +25,10 @@ function ApplicationCard({
         name="status"
         value={application.status}
         onChange={(event) => {
+          const newStatus = event.target.value as ApplicationStatus;
           onUpdateApplication({
             ...application,
-            status: event.target.value,
+            status: newStatus
           });
         }}
       >
