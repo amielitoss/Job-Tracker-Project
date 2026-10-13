@@ -1,13 +1,21 @@
 import { useState } from "react";
+import type { Application, ApplicationStatus } from "../types/types";
+
+type ApplicationFormProps = {
+  onAddApplication: (application: Application) => void;
+  editApplication: Application | null;
+  onCancelEdit: () => void;
+  onUpdateApplication: (application: Application) => void;
+};
 
 function ApplicationForm({
   onAddApplication,
   editApplication,
   onCancelEdit,
   onUpdateApplication,
-}) {
+}: ApplicationFormProps) {
   
-  const emptyForm = {
+  const emptyForm: Omit<Application, "id"> = {
     company: "",
     role: "",
     status: "Applied",
@@ -79,9 +87,10 @@ function ApplicationForm({
         id="status"
         value={formData.status}
         onChange={(event) => {
+          const newStatus = event.target.value as ApplicationStatus
           setFormData({
             ...formData,
-            status: event.target.value,
+            status: newStatus,
           });
         }}
       >

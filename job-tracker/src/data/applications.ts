@@ -2,7 +2,7 @@ import type { Application } from "../types/types";
 
 const initialApplications: Application[] = [
   {
-    id: 1,
+    id: "1",
     company: "Example Company 1",
     role: "Fullstack Developer",
     status: "Interview",
@@ -11,7 +11,7 @@ const initialApplications: Application[] = [
     notes: "Applied through LinkedIn"
   },
   {
-    id: 2,
+    id: "2",
     company: "Example Company 2",
     role: "Frontend Developer",
     status: "Applied",
@@ -20,7 +20,7 @@ const initialApplications: Application[] = [
     notes: "Applied through Indeed"
   },
   {
-    id: 3,
+    id: "3",
     company: "Example Company 3",
     role: "Backend Developer",
     status: "Rejected",

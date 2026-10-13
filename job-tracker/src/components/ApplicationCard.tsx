@@ -2,7 +2,7 @@ import type { Application, ApplicationStatus } from "../types/types";
 
 type ApplicationCardProps = {
   application: Application
-  onDeleteApplication: (id: number) => void;
+  onDeleteApplication: (id: string) => void;
   onEditApplication: (application: Application) => void;
   onUpdateApplication: (application: Application) => void;
   onViewApplication: (application: Application) => void;
