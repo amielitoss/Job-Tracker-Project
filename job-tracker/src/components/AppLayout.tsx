@@ -2,7 +2,11 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useState, useEffect } from "react";
 
-function AppLayout({ darkMode }) {
+type AppLayoutProps = {
+  darkMode: boolean;
+}
+
+function AppLayout({ darkMode }: AppLayoutProps) {
   const [menuOpen, setMenuOpen] = useState(false);
     
   useEffect(() => {
