@@ -1,6 +1,13 @@
 import { Sun, Moon } from "lucide-react";
+import type { Application } from "../types/types";
 
-function Interviews({ darkMode, setDarkMode, applications }) {
+type InterviewsProps = {
+  darkMode: boolean;
+  setDarkMode: (darkMode: boolean) => void;
+  applications: Application[];
+}
+
+function Interviews({ darkMode, setDarkMode, applications }: InterviewsProps) {
   const interviews = applications.filter((application) => {
     return application.status === "Interview";
   });
