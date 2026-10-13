@@ -1,9 +1,20 @@
+import type { Application } from "../types/types";
+
+type RecentApplicationProps = {
+  application: Application;
+  onViewApplication: (application: Application) => void;
+  onEditApplication: (application: Application) => void;
+};
+
+
+
 function RecentApplication({
   application,
   onViewApplication,
   onEditApplication,
-}) {
-  function sliceText(text, maxLength) {
+}: RecentApplicationProps) {
+
+  function sliceText(text: string, maxLength: number) {
     return text.length > maxLength
       ? text.slice(0, maxLength) + "..."
       : text;
