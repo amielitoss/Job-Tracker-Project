@@ -1,8 +1,14 @@
 import { useEffect } from "react";
+import type { Application } from "../types/types";
 
-function ApplicationDetailsModal({ application, onClose }) {
+type ApplicationDetailsModalProps = {
+  application: Application;
+  onClose: () => void;
+};
+
+function ApplicationDetailsModal({ application, onClose }: ApplicationDetailsModalProps) {
   useEffect(() => {
-    function handleKeyDown(event) {
+    function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         onClose();
       }
