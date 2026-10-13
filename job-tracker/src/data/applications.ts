@@ -1,4 +1,6 @@
-const initialApplications = [
+import type { Application } from "../types/types";
+
+const initialApplications: Application[] = [
   {
     id: 1,
     company: "Example Company 1",
