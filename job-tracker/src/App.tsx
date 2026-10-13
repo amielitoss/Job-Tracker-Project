@@ -7,15 +7,21 @@ import Footer from "./components/Footer";
 import AppLayout from "./components/AppLayout";
 import Settings from "./pages/Settings";
 import "./App.css";
+import type { Application } from "./types/types";
 
 
 function App() {
-  const [applications, setApplications] = useState(
-    JSON.parse(localStorage.getItem("applications")) ?? [],
-  );
-  const [editApplication, setEditApplication] = useState(null);
-  const [darkMode, setDarkMode] = useState(
-    JSON.parse(localStorage.getItem("darkMode")) ?? false,
+  const savedApplications = localStorage.getItem("applications");
+  const savedDarkMode = localStorage.getItem("darkMode");
+
+const [applications, setApplications] = useState<Application[]>(
+  savedApplications ? JSON.parse(savedApplications) : []
+);
+
+  const [editApplication, setEditApplication] = useState<Application | null>(null);
+
+  const [darkMode, setDarkMode] = useState<boolean>(
+    savedDarkMode ? JSON.parse(savedDarkMode) : false
   );
 
   useEffect(() => {
@@ -26,7 +32,7 @@ function App() {
     localStorage.setItem("applications", JSON.stringify(applications));
   }, [applications]);
 
-  function deleteApplication(id) {
+  function deleteApplication(id: string) {
     setApplications(
       applications.filter((application) => {
         return application.id !== id;
@@ -34,7 +40,7 @@ function App() {
     );
   }
 
-  function updateApplication(updatedApplication) {
+  function updateApplication(updatedApplication: Application) {
     setApplications(
       applications.map((application) => {
         if (application.id === updatedApplication.id) {
