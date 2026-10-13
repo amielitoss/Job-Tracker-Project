@@ -1,6 +1,11 @@
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import type { Application } from "../types/types";
 
-function StatusChart({ applications }) {
+type StatusChartProps = {
+  applications: Application[];
+}
+
+function StatusChart({ applications }: StatusChartProps) {
   const data = [
     {
       name: "Applied",
