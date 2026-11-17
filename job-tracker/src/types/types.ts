@@ -8,3 +8,9 @@ export type Application = {
     notes?: string;
 }
 export type ApplicationStatus = "Applied" | "Interview" | "Offer" | "Rejected";
+
+export type CurrentUser = {
+  user_uid: string;
+  email: string;
+  created_at?: string;
+};

@@ -6,22 +6,40 @@ import Interviews from "./pages/Interviews";
 import Footer from "./components/Footer";
 import AppLayout from "./components/AppLayout";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import "./App.css";
-import type { Application } from "./types/types";
+import type { Application, CurrentUser } from "./types/types";
 
 
 function App() {
   const savedApplications = localStorage.getItem("applications");
   const savedDarkMode = localStorage.getItem("darkMode");
+  const [authLoading, setAuthLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
 
-const [applications, setApplications] = useState<Application[]>(
-  savedApplications ? JSON.parse(savedApplications) : []
-);
+  useEffect(() => {
+    fetch("http://localhost:5000/api/auth/me", {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "OK") setCurrentUser(data.user);
+      })
+      .finally(() => setAuthLoading(false));
+  }, []);
 
-  const [editApplication, setEditApplication] = useState<Application | null>(null);
+
+  const [applications, setApplications] = useState<Application[]>(
+    savedApplications ? JSON.parse(savedApplications) : [],
+  );
+
+  const [editApplication, setEditApplication] = useState<Application | null>(
+    null,
+  );
 
   const [darkMode, setDarkMode] = useState<boolean>(
-    savedDarkMode ? JSON.parse(savedDarkMode) : false
+    savedDarkMode ? JSON.parse(savedDarkMode) : false,
   );
 
   useEffect(() => {
@@ -31,6 +49,14 @@ const [applications, setApplications] = useState<Application[]>(
   useEffect(() => {
     localStorage.setItem("applications", JSON.stringify(applications));
   }, [applications]);
+
+  if(authLoading){
+    return "Loading...";
+  }
+
+  if(!currentUser){
+    return <Login setCurrentUser={setCurrentUser}/>;
+  }
 
   function deleteApplication(id: string) {
     setApplications(
@@ -55,7 +81,7 @@ const [applications, setApplications] = useState<Application[]>(
   return (
     <>
       <Routes>
-        <Route element={<AppLayout darkMode={darkMode} />}>
+        <Route element={<AppLayout darkMode={darkMode} setCurrentUser={setCurrentUser} />}>
           <Route
             path="/"
             element={
@@ -98,11 +124,16 @@ const [applications, setApplications] = useState<Application[]>(
 
           <Route
             path="/settings"
-            element={<Settings darkMode={darkMode} setDarkMode={setDarkMode} 
-            setApplications={setApplications}
-             />
+            element={
+              <Settings
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+                setApplications={setApplications}
+              />
             }
           />
+
+          <Route path="/register" element={<Register />} />
 
         </Route>
       </Routes>
