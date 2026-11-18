@@ -11,12 +11,12 @@ import Register from "./pages/Register";
 import "./App.css";
 import type { Application, CurrentUser } from "./types/types";
 
-
 function App() {
-  const savedApplications = localStorage.getItem("applications");
   const savedDarkMode = localStorage.getItem("darkMode");
   const [authLoading, setAuthLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [applicationsLoading, setApplicationsLoading] = useState(false);
+  const [applicationsError, setApplicationsError] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:5000/api/auth/me", {
@@ -29,59 +29,109 @@ function App() {
       .finally(() => setAuthLoading(false));
   }, []);
 
-
-  const [applications, setApplications] = useState<Application[]>(
-    savedApplications ? JSON.parse(savedApplications) : [],
-  );
-
+  const [applications, setApplications] = useState<Application[]>([]);
   const [editApplication, setEditApplication] = useState<Application | null>(
     null,
   );
-
   const [darkMode, setDarkMode] = useState<boolean>(
     savedDarkMode ? JSON.parse(savedDarkMode) : false,
   );
 
   useEffect(() => {
+    if (!currentUser) return;
+    setApplicationsLoading(true);
+    setApplicationsError("");
+    fetch("http://localhost:5000/api/applications", {
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch applications");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setApplications(data);
+      })
+      .catch((error) => {
+        setApplicationsError(error.message);
+      })
+      .finally(() => setApplicationsLoading(false));
+  }, [currentUser]);
+
+  useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
 
-  useEffect(() => {
-    localStorage.setItem("applications", JSON.stringify(applications));
-  }, [applications]);
-
-  if(authLoading){
+  if (authLoading) {
     return "Loading...";
   }
 
-  if(!currentUser){
-    return <Login setCurrentUser={setCurrentUser}/>;
+  if (!currentUser) {
+    return <Login setCurrentUser={setCurrentUser} />;
+  }
+
+  if (applicationsLoading) {
+    return "Loading applications...";
+  }
+
+  if (applicationsError) {
+    return <p>{applicationsError}</p>;
   }
 
   function deleteApplication(id: string) {
-    setApplications(
-      applications.filter((application) => {
-        return application.id !== id;
-      }),
-    );
+    fetch(`http://localhost:5000/api/applications/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setApplications(
+          applications.filter((application) => {
+            return application.id !== data.id;
+          }),
+        );
+      });
   }
 
   function updateApplication(updatedApplication: Application) {
-    setApplications(
-      applications.map((application) => {
-        if (application.id === updatedApplication.id) {
-          return updatedApplication;
-        } else {
-          return application;
-        }
+    fetch(`http://localhost:5000/api/applications/${updatedApplication.id}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        company: updatedApplication.company,
+        role: updatedApplication.role,
+        status: updatedApplication.status,
+        date: updatedApplication.date,
+        location: updatedApplication.location,
+        notes: updatedApplication.notes,
       }),
-    );
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setApplications(
+          applications.map((application) => {
+            if (application.id === data.id) {
+              return data;
+            }
+
+            return application;
+          }),
+        );
+      });
   }
 
   return (
     <>
       <Routes>
-        <Route element={<AppLayout darkMode={darkMode} setCurrentUser={setCurrentUser} />}>
+        <Route
+          element={
+            <AppLayout darkMode={darkMode} setCurrentUser={setCurrentUser} />
+          }
+        >
           <Route
             path="/"
             element={
@@ -134,7 +184,6 @@ function App() {
           />
 
           <Route path="/register" element={<Register />} />
-
         </Route>
       </Routes>
       <Footer darkMode={darkMode} />

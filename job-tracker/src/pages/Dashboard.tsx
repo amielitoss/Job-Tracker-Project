@@ -24,7 +24,6 @@ type Stat = {
   type: "total" | "interview" | "offer" | "rejected" | "applied";
 };
 
-
 type DashboardProps = {
   applications: Application[];
   setApplications: (applications: Application[]) => void;
@@ -34,8 +33,6 @@ type DashboardProps = {
   darkMode: boolean;
   setDarkMode: (darkMode: boolean) => void;
 };
-
-
 
 function Dashboard({
   applications,
@@ -130,7 +127,23 @@ function Dashboard({
   ];
 
   function addApplication(newApplication: Application) {
-    setApplications([...applications, newApplication]);
+    fetch("http://localhost:5000/api/applications", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        company: newApplication.company,
+        role: newApplication.role,
+        status: newApplication.status,
+        date: newApplication.date,
+        location: newApplication.location,
+        notes: newApplication.notes,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => setApplications([...applications, data]));
   }
 
   function openForm() {

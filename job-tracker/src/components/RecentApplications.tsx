@@ -26,7 +26,7 @@ function RecentApplication({
         <p>{sliceText(application.company, 10)}</p>
         <p>{sliceText(application.role, 14)}</p>
         <p>{application.date}</p>
-        <p>{sliceText(application.location, 14)}</p>
+        <p>{sliceText(application.location ?? "", 14)}</p>
       </div>
 
       <div className={`recent-application-status status-${application.status.toLowerCase()}`}>
