@@ -127,7 +127,7 @@ function Dashboard({
   ];
 
   function addApplication(newApplication: Application) {
-    fetch("http://localhost:5000/api/applications", {
+    return fetch("http://localhost:5000/api/applications", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -142,8 +142,17 @@ function Dashboard({
         notes: newApplication.notes,
       }),
     })
-      .then((response) => response.json())
-      .then((data) => setApplications([...applications, data]));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to create application");
+        }
+        return response.json();
+      })
+      .then((data) => setApplications([...applications, data]))
+      .catch((error) => {
+        console.error(error.message);
+        throw error;
+      });
   }
 
   function openForm() {
@@ -161,8 +170,7 @@ function Dashboard({
   }
 
   function addAndClose(newApplication: Application) {
-    addApplication(newApplication);
-    closeForm();
+    addApplication(newApplication).then(() => closeForm()).catch((error) => console.error(error.message));
   }
 
   const recentApplications = applications.slice(-5);

@@ -1,4 +1,5 @@
 import type { Application } from "../types/types";
+import { formatDate } from "../utils/formatDate";
 
 type RecentApplicationProps = {
   application: Application;
@@ -25,7 +26,7 @@ function RecentApplication({
       <div className="recent-application-info">
         <p>{sliceText(application.company, 10)}</p>
         <p>{sliceText(application.role, 14)}</p>
-        <p>{application.date}</p>
+        <p>{formatDate(application.date)}</p>
         <p>{sliceText(application.location ?? "", 14)}</p>
       </div>
 

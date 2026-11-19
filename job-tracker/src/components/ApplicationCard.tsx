@@ -1,4 +1,5 @@
 import type { Application, ApplicationStatus } from "../types/types";
+import { formatDate } from "../utils/formatDate";
 
 type ApplicationCardProps = {
   application: Application
@@ -37,7 +38,7 @@ function ApplicationCard({
         <option value="Offer">Offer</option>
         <option value="Rejected">Rejected</option>
       </select>
-      <p>{application.date}</p>
+      <p>{formatDate(application.date)}</p>
       <p>{application.location}</p>
 
       <div className="application-card-actions">

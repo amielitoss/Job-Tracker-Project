@@ -68,7 +68,17 @@ function App() {
   }
 
   if (!currentUser) {
-    return <Login setCurrentUser={setCurrentUser} />;
+    return (
+      <Routes>
+        <Route path="/" element={<Login setCurrentUser={setCurrentUser} />} />
+        <Route
+          path="/login"
+          element={<Login setCurrentUser={setCurrentUser} />}
+        />
+
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    );
   }
 
   if (applicationsLoading) {
@@ -84,13 +94,20 @@ function App() {
       method: "DELETE",
       credentials: "include",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if(!response.ok){
+          throw new Error("Unable to delete application")
+        }
+        return response.json();
+      })
       .then((data) => {
         setApplications(
           applications.filter((application) => {
             return application.id !== data.id;
           }),
         );
+      }).catch((error) => {
+        console.error(error.message);
       });
   }
 
@@ -110,7 +127,12 @@ function App() {
         notes: updatedApplication.notes,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to update application");
+        }
+        return response.json();
+      })
       .then((data) => {
         setApplications(
           applications.map((application) => {
@@ -121,6 +143,9 @@ function App() {
             return application;
           }),
         );
+      })
+      .catch((error) => {
+        console.error(error.message);
       });
   }
 

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import type { Application } from "../types/types";
+import { formatDate } from "../utils/formatDate";
 
 type ApplicationDetailsModalProps = {
   application: Application;
@@ -46,7 +47,7 @@ function ApplicationDetailsModal({ application, onClose }: ApplicationDetailsMod
         </div>
         <div className="application-detail">
           <span>Date:</span>
-          <p>{application.date}</p>
+          <p>{formatDate(application.date)}</p>
         </div>
         <div className="application-detail">
           <span>Location:</span>
