@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { SubmitEvent } from "react";
 import type { CurrentUser } from "../types/types";
+import { Link } from "react-router-dom";
 
 type LoginProps = {
   setCurrentUser: React.Dispatch<React.SetStateAction<CurrentUser | null>>;
@@ -45,6 +46,7 @@ function Login({ setCurrentUser }: LoginProps) {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Login</button>
+        <Link to="/forgot-password">Forgot password?</Link>
       </form>
     </div>
   );

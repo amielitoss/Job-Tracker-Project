@@ -8,6 +8,8 @@ import AppLayout from "./components/AppLayout";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import "./App.css";
 import type { Application, CurrentUser } from "./types/types";
 
@@ -77,6 +79,8 @@ function App() {
         />
 
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     );
   }
@@ -95,8 +99,8 @@ function App() {
       credentials: "include",
     })
       .then((response) => {
-        if(!response.ok){
-          throw new Error("Unable to delete application")
+        if (!response.ok) {
+          throw new Error("Unable to delete application");
         }
         return response.json();
       })
@@ -106,7 +110,8 @@ function App() {
             return application.id !== data.id;
           }),
         );
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.error(error.message);
       });
   }
@@ -207,8 +212,6 @@ function App() {
               />
             }
           />
-
-          <Route path="/register" element={<Register />} />
         </Route>
       </Routes>
       <Footer darkMode={darkMode} />
