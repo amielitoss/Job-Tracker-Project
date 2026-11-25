@@ -14,7 +14,7 @@ import {
   BadgeCheck,
   CircleX,
 } from "lucide-react";
-import type { Application } from "../types/types";
+import type { Application, CurrentUser } from "../types/types";
 import type { LucideIcon } from "lucide-react";
 
 type Stat = {
@@ -32,6 +32,7 @@ type DashboardProps = {
   setEditApplication: (parameter: Application | null) => void;
   darkMode: boolean;
   setDarkMode: (darkMode: boolean) => void;
+  currentUser: CurrentUser;
 };
 
 function Dashboard({
@@ -42,6 +43,7 @@ function Dashboard({
   setEditApplication,
   darkMode,
   setDarkMode,
+  currentUser,
 }: DashboardProps) {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -170,7 +172,9 @@ function Dashboard({
   }
 
   function addAndClose(newApplication: Application) {
-    addApplication(newApplication).then(() => closeForm()).catch((error) => console.error(error.message));
+    addApplication(newApplication)
+      .then(() => closeForm())
+      .catch((error) => console.error(error.message));
   }
 
   const recentApplications = applications.slice(-5);
@@ -183,6 +187,7 @@ function Dashboard({
           setDarkMode={setDarkMode}
           onOpenForm={openForm}
         />
+        <h1>Welcome back, {currentUser.name}</h1>
         <div className="stats-section">
           {stats.map((stat) => {
             return (

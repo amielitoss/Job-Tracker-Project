@@ -11,6 +11,7 @@ export type ApplicationStatus = "Applied" | "Interview" | "Offer" | "Rejected";
 
 export type CurrentUser = {
   user_uid: string;
+  name: string;
   email: string;
   created_at?: string;
 };

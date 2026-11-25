@@ -173,6 +173,7 @@ function App() {
                 setEditApplication={setEditApplication}
                 darkMode={darkMode}
                 setDarkMode={setDarkMode}
+                currentUser={currentUser}
               />
             }
           />

@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [showVerification, setShowVerification] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
   const [timeLeft, setTimeLeft] = useState(300);
+  const [name, setName] = useState("");
 
   const navigate = useNavigate();
 
@@ -25,70 +27,108 @@ function Register() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
-  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
-    fetch("http://localhost:5000/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: registerEmail,
-        password: registerPassword,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "OK") {
-          setMessage(data.message);
-          setShowVerification(true);
-        }
-      });
-  }
-
-  function handleVerify(event: SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    fetch("http://localhost:5000/api/auth/verify-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: registerEmail,
-        code: verificationCode,
-      }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setMessage(data.message);
+    setLoading(true);
+    setMessage("");
 
-        if (data.status === "OK") {
-          navigate("/login");
-        }
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email: registerEmail,
+          password: registerPassword,
+        }),
       });
+
+      const data = await response.json();
+      if (!response.ok) {
+        setMessage(data.message);
+        return;
+      }
+      setMessage(data.message);
+      setShowVerification(true);
+    } catch {
+      setMessage("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  function handleResend() {
-    fetch("http://localhost:5000/api/auth/resend-verification", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: registerEmail,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setMessage(data.message);
+  async function handleVerify(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-        if (data.status === "OK") {
-          setTimeLeft(300);
-        }
-      });
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/auth/verify-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: registerEmail,
+            code: verificationCode,
+          }),
+        },
+      );
+
+      const data = await response.json();
+      if (!response.ok) {
+        setMessage(data.message);
+        return;
+      }
+
+      if (data.status === "OK") {
+        setMessage(data.message);
+        navigate("/login");
+      }
+    } catch {
+      setMessage("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleResend() {
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/auth/resend-verification",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: registerEmail,
+          }),
+        },
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        setMessage(data.message);
+        return;
+      }
+      if (data.status === "OK") {
+        setMessage(data.message);
+        setTimeLeft(300);
+      }
+    } catch {
+      setMessage("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (showVerification) {
@@ -102,9 +142,15 @@ function Register() {
             placeholder="Enter 6-digit code"
           />
 
-          <button type="submit">Verify email</button>
-          <button type="button" onClick={handleResend} disabled={timeLeft > 0}>
-            Resend code
+          <button type="submit" disabled={loading}>
+            {loading ? "Verifying..." : "Verify email"}
+          </button>
+          <button
+            type="button"
+            onClick={handleResend}
+            disabled={timeLeft > 0 || loading}
+          >
+            {loading ? "Sending..." : "Resend code"}
           </button>
           <p>
             {timeLeft > 0
@@ -121,16 +167,25 @@ function Register() {
     <div className="register-form">
       <form onSubmit={handleSubmit}>
         <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+        />
+        <input
           type="email"
           value={registerEmail}
           onChange={(e) => setRegisterEmail(e.target.value)}
+          placeholder="example@gmail.com"
         />
         <input
           type="password"
           value={registerPassword}
           onChange={(e) => setRegisterPassword(e.target.value)}
         />
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Creating account..." : "Register"}
+        </button>
       </form>
       <p>{message}</p>
     </div>
