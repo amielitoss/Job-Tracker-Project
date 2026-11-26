@@ -30,7 +30,9 @@ function ForgotPassword() {
         setMessage(data.message);
         return;
       }
-      navigate("/reset-password");
+      navigate("/reset-password", {
+        state: { email },
+      });
     } catch {
       setMessage("Something went wrong. Please try again.");
     } finally {

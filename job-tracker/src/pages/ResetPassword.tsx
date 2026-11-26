@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function ResetPassword() {
-  const [email, setEmail] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState(location.state?.email ?? "");
   const [code, setCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,6 +52,7 @@ function ResetPassword() {
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        readOnly={Boolean(location.state?.email)}
       />
 
       <input
