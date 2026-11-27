@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
-import type { Application } from "../types/types";
-
+import type { Application, CurrentUser } from "../types/types";
 
 type SettingsProps = {
   darkMode: boolean;
   setDarkMode: (darkMode: boolean) => void;
   setApplications: (application: Application[]) => void;
+  currentUser: CurrentUser;
 };
 
-function Settings({ darkMode, setDarkMode, setApplications }: SettingsProps) {
+function Settings({
+  darkMode,
+  setDarkMode,
+  setApplications,
+  currentUser,
+}: SettingsProps) {
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
 
   useEffect(() => {
@@ -45,6 +50,21 @@ function Settings({ darkMode, setDarkMode, setApplications }: SettingsProps) {
     <div className={darkMode ? "settings-page dark-mode" : "settings-page"}>
       <div className="settings-header">
         <h2>Settings</h2>
+      </div>
+
+      <div className="settings-card account-card">
+        <h3>Account</h3>
+
+        <div className="account-summary">
+          <div className="account-avatar">
+            {currentUser.name.charAt(0).toUpperCase()}
+          </div>
+
+          <div className="account-info">
+            <strong>{currentUser.name}</strong>
+            <span>{currentUser.email}</span>
+          </div>
+        </div>
       </div>
 
       <div className="settings-card">

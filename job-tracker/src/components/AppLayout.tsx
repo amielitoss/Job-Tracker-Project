@@ -44,7 +44,7 @@ function AppLayout({ darkMode, setCurrentUser }: AppLayoutProps) {
 
       <div className={menuOpen ? "sidebar-wrapper open" : "sidebar-wrapper"}>
         <Sidebar onNavigate={() => setMenuOpen(false)} />
-          <button onClick={handleLogout}>Logout</button>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
       
 

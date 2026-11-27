@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import "../styles/auth.css";
 
 function ResetPassword() {
   const location = useLocation();
@@ -47,32 +48,68 @@ function ResetPassword() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        readOnly={Boolean(location.state?.email)}
-      />
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h1>Reset your password</h1>
+          <p>Enter your verification code and choose a new password.</p>
+        </div>
 
-      <input
-        type="text"
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-      />
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <div className="auth-field">
+            <label htmlFor="reset-email">Email</label>
+            <input
+              id="reset-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              readOnly={Boolean(location.state?.email)}
+              autoComplete="email"
+              placeholder="example@gmail.com"
+            />
+          </div>
 
-      <input
-        type="password"
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-      />
+          <div className="auth-field">
+            <label htmlFor="reset-code">Reset code</label>
+            <input
+              id="reset-code"
+              type="text"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              placeholder="Enter 6-digit code"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              maxLength={6}
+            />
+          </div>
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Resetting..." : "Reset password"}
-      </button>
+          <div className="auth-field">
+            <label htmlFor="new-password">New password</label>
+            <input
+              id="new-password"
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Minimum 8 characters"
+              autoComplete="new-password"
+            />
+          </div>
 
-      <p>{message}</p>
-    </form>
+          {message && <p className="auth-message">{message}</p>}
+
+          <button className="auth-submit" type="submit" disabled={loading}>
+            {loading ? "Resetting..." : "Reset password"}
+          </button>
+        </form>
+
+        <p className="auth-footer-text">
+          Remember your password?{" "}
+          <Link className="auth-link" to="/login">
+            Back to login
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 }
 

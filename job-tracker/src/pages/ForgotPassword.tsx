@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import "../styles/auth.css";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -39,19 +40,51 @@ function ForgotPassword() {
       setLoading(false);
     }
   };
+  
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button type="submit" disabled={loading}>
-        {loading ? "Sending..." : "Send reset code"}
-      </button>
-      <p>{message}</p>
-    </form>
-  );
+  <div className="auth-page">
+    <div className="auth-card">
+      <div className="auth-header">
+        <h1>Forgot your password?</h1>
+        <p>
+          Enter your email and we’ll send you a code to reset your password.
+        </p>
+      </div>
+
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <div className="auth-field">
+          <label htmlFor="forgot-email">Email</label>
+
+          <input
+            id="forgot-email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="example@gmail.com"
+            autoComplete="email"
+          />
+        </div>
+
+        {message && <p className="auth-message">{message}</p>}
+
+        <button
+          className="auth-submit"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "Sending..." : "Send reset code"}
+        </button>
+      </form>
+
+      <p className="auth-footer-text">
+        Remember your password?{" "}
+        <Link className="auth-link" to="/login">
+          Back to login
+        </Link>
+      </p>
+    </div>
+  </div>
+);
 }
 
 export default ForgotPassword;

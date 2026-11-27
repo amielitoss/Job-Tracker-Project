@@ -127,3 +127,51 @@
   background: #fecaca;
   transform: translateY(-1px);
 }
+
+.account-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.account-summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  background: var(--bg);
+}
+
+.account-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  background: var(--primary);
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.account-info strong {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.account-info span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}

@@ -10,6 +10,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import {
+  getApplications,
+  updateApplicationApi,
+  deleteApplicationApi,
+} from "./services/applicationApi";
 import "./App.css";
 import type { Application, CurrentUser } from "./types/types";
 
@@ -39,27 +44,17 @@ function App() {
     savedDarkMode ? JSON.parse(savedDarkMode) : false,
   );
 
-  useEffect(() => {
-    if (!currentUser) return;
-    setApplicationsLoading(true);
-    setApplicationsError("");
-    fetch("http://localhost:5000/api/applications", {
-      credentials: "include",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unable to fetch applications");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setApplications(data);
-      })
-      .catch((error) => {
-        setApplicationsError(error.message);
-      })
-      .finally(() => setApplicationsLoading(false));
-  }, [currentUser]);
+useEffect(() => {
+  if (!currentUser) return;
+
+  setApplicationsLoading(true);
+  setApplicationsError("");
+
+  getApplications()
+    .then((data) => setApplications(data))
+    .catch((error) => setApplicationsError(error.message))
+    .finally(() => setApplicationsLoading(false));
+}, [currentUser]);
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
@@ -71,17 +66,18 @@ function App() {
 
   if (!currentUser) {
     return (
-      <Routes>
-        <Route path="/" element={<Login setCurrentUser={setCurrentUser} />} />
-        <Route
-          path="/login"
-          element={<Login setCurrentUser={setCurrentUser} />}
-        />
-
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-      </Routes>
+      <div className={darkMode ? "dark-mode" : ""}>
+        <Routes>
+          <Route path="/" element={<Login setCurrentUser={setCurrentUser} />} />
+          <Route
+            path="/login"
+            element={<Login setCurrentUser={setCurrentUser} />}
+          />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+        </Routes>
+      </div>
     );
   }
 
@@ -93,66 +89,31 @@ function App() {
     return <p>{applicationsError}</p>;
   }
 
-  function deleteApplication(id: string) {
-    fetch(`http://localhost:5000/api/applications/${id}`, {
-      method: "DELETE",
-      credentials: "include",
+function deleteApplication(id: string) {
+  deleteApplicationApi(id)
+    .then((data) => {
+      setApplications((current) =>
+        current.filter((application) => application.id !== data.id),
+      );
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unable to delete application");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setApplications(
-          applications.filter((application) => {
-            return application.id !== data.id;
-          }),
-        );
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }
+    .catch((error) => {
+      console.error(error.message);
+    });
+}
 
-  function updateApplication(updatedApplication: Application) {
-    fetch(`http://localhost:5000/api/applications/${updatedApplication.id}`, {
-      method: "PATCH",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        company: updatedApplication.company,
-        role: updatedApplication.role,
-        status: updatedApplication.status,
-        date: updatedApplication.date,
-        location: updatedApplication.location,
-        notes: updatedApplication.notes,
-      }),
+function updateApplication(updatedApplication: Application) {
+  updateApplicationApi(updatedApplication)
+    .then((data) => {
+      setApplications((current) =>
+        current.map((application) =>
+          application.id === data.id ? data : application,
+        ),
+      );
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unable to update application");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setApplications(
-          applications.map((application) => {
-            if (application.id === data.id) {
-              return data;
-            }
-
-            return application;
-          }),
-        );
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }
+    .catch((error) => {
+      console.error(error.message);
+    });
+}
 
   return (
     <>
@@ -210,6 +171,7 @@ function App() {
                 darkMode={darkMode}
                 setDarkMode={setDarkMode}
                 setApplications={setApplications}
+                currentUser={currentUser}
               />
             }
           />

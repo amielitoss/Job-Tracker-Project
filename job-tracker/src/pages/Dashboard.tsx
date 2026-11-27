@@ -5,6 +5,7 @@ import ApplicationDetailsModal from "../components/ApplicationDetailsModal";
 import RecentApplication from "../components/RecentApplications";
 import StatusChart from "../components/StatusChart";
 import ApplicationsChart from "../components/ApplicationsChart";
+import { createApplicationApi } from "../services/applicationApi";
 import { Link } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import {
@@ -26,7 +27,7 @@ type Stat = {
 
 type DashboardProps = {
   applications: Application[];
-  setApplications: (applications: Application[]) => void;
+  setApplications: React.Dispatch<React.SetStateAction<Application[]>>;
   updateApplication: (application: Application) => void;
   editApplication: Application | null;
   setEditApplication: (parameter: Application | null) => void;
@@ -129,28 +130,10 @@ function Dashboard({
   ];
 
   function addApplication(newApplication: Application) {
-    return fetch("http://localhost:5000/api/applications", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        company: newApplication.company,
-        role: newApplication.role,
-        status: newApplication.status,
-        date: newApplication.date,
-        location: newApplication.location,
-        notes: newApplication.notes,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unable to create application");
-        }
-        return response.json();
+    return createApplicationApi(newApplication)
+      .then((data) => {
+        setApplications((current) => [...current, data]);
       })
-      .then((data) => setApplications([...applications, data]))
       .catch((error) => {
         console.error(error.message);
         throw error;
@@ -187,7 +170,10 @@ function Dashboard({
           setDarkMode={setDarkMode}
           onOpenForm={openForm}
         />
-        <h1>Welcome back, {currentUser.name}</h1>
+        <div className="dashboard-greeting">
+          <h2>Welcome back, {currentUser.name}</h2>
+          <p>Here’s an overview of your job search progress.</p>
+        </div>
         <div className="stats-section">
           {stats.map((stat) => {
             return (

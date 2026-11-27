@@ -318,3 +318,22 @@
   color: #991b1b;
   border-color: #fecaca;
 }
+
+.dashboard-greeting {
+  margin: 2rem 0 1.5rem;
+}
+
+.dashboard-greeting h2 {
+  margin: 0;
+  margin-left: 20px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.dashboard-greeting p {
+  margin: 0.35rem 0 0;
+  margin-left: 20px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
